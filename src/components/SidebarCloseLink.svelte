@@ -1,15 +1,18 @@
 <script lang="ts">
-  import { useSidebar } from "@/components/ui/sidebar";
-  import type { HTMLAttributes } from "svelte/elements";
+import { useSidebar } from "@/components/ui/sidebar";
+import type { HTMLAttributes } from "svelte/elements";
 
-  let { 
-    href, 
-    name, 
-    class: className,
-    ...restProps 
-  }: { href: string; name: string } & HTMLAttributes<HTMLAnchorElement> = $props();
-  
-  const sidebar = useSidebar();
+let {
+	href,
+	name,
+	class: className,
+	...restProps
+}: {
+	href: string;
+	name: string;
+} & HTMLAttributes<HTMLAnchorElement> = $props();
+
+const sidebar = useSidebar();
 </script>
 
 <a 

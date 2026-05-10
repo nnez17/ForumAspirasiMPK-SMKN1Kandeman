@@ -1,17 +1,17 @@
 <script lang="ts">
-  import * as Sidebar from "@/components/ui/sidebar";
-  import MobileMenuTrigger from "./MobileMenuTrigger.svelte";
-  import SidebarCloseLink from "./SidebarCloseLink.svelte";
+import * as Sidebar from "@/components/ui/sidebar";
+import MobileMenuTrigger from "./MobileMenuTrigger.svelte";
+import SidebarCloseLink from "./SidebarCloseLink.svelte";
 
-  let { 
-    links = [
-      { name: "Beranda", href: "#home"},
-      { name: "Berita", href: "#berita"},
-      { name: "Pengurus", href: "#pengurus"},
-      { name: "Kontak", href: "#kontak"},
-      { name: "Admin", href: "/admin"},
-    ] 
-  } = $props();
+let {
+	links = [
+		{ name: "Beranda", href: "#home" },
+		{ name: "Berita", href: "#berita" },
+		{ name: "Pengurus", href: "#pengurus" },
+		{ name: "Kontak", href: "#kontak" },
+		{ name: "Admin", href: "/admin" },
+	],
+} = $props();
 </script>
 
 <Sidebar.Provider class="contents">

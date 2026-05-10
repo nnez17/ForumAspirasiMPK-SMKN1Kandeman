@@ -1,6 +1,21 @@
 ---
-import { ArrowRight, ChevronLeft, ChevronRight, Clock, Search, User } from '@lucide/astro';
-import { newsData } from '../data/News';
+import {
+	ArrowRight,
+	ChevronLeft,
+	ChevronRight,
+	Clock,
+	Search,
+	User,
+} from "@lucide/astro";
+import { newsData as staticNewsData, type NewsItem } from "../data/News";
+import { app } from "@/api/elysia";
+
+const response = await app.handle(
+	new Request("http://localhost:4321/api/news"),
+);
+const result = await response.json();
+const newsData: NewsItem[] =
+	result.success && result.data?.length > 0 ? result.data : staticNewsData;
 ---
 
 <section class="container mx-auto px-4 py-12" id="berita">
