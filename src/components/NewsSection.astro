@@ -7,7 +7,15 @@ import {
 	Search,
 	User,
 } from "@lucide/astro";
-import { newsData } from "../data/News";
+import { newsData as staticNewsData, type NewsItem } from "../data/News";
+import { app } from "@/api/elysia";
+
+const response = await app.handle(
+	new Request("http://localhost:4321/api/news"),
+);
+const result = await response.json();
+const newsData: NewsItem[] =
+	result.success && result.data?.length > 0 ? result.data : staticNewsData;
 ---
 
 <section class="container mx-auto px-4 sm:px-6 py-8 sm:py-10 md:py-12" id="berita">
