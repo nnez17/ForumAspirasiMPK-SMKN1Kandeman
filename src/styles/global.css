@@ -123,11 +123,11 @@
 }
 
 * {
-	scrollbar-width: none;
 	scroll-behavior: smooth;
-	-webkit-user-drag: none;
 }
 
-*::-webkit-scrollbar {
-	display: none;
+.no-drag {
+	-webkit-user-drag: none;
+	user-select: none;
+	-moz-user-drag: none;
 }

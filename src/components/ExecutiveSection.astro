@@ -3,37 +3,37 @@ import { ChevronDown } from "@lucide/astro";
 import { leader, assistants, administration } from "@/data/Executive";
 ---
 
-<section class="w-full bg-[#050505] py-32 px-4 overflow-hidden relative" id="pengurus">
+<section class="w-full bg-[#050505] py-16 sm:py-20 md:py-28 lg:py-32 px-4 overflow-hidden relative" id="pengurus">
   <!-- Blueprint Grid Pattern -->
   <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 30px 30px;"></div>
   <div class="absolute inset-0 opacity-[0.05] pointer-events-none" style="background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px); background-size: 150px 150px;"></div>
 
   <!-- Radial Glows -->
-  <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full pointer-events-none"></div>
-  <div class="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-amber-500/5 rounded-full pointer-events-none"></div>
+  <div class="absolute top-0 left-1/4 w-[300px] sm:w-[400px] lg:w-[500px] h-[300px] sm:h-[400px] lg:h-[500px] bg-primary/5 rounded-full pointer-events-none"></div>
+  <div class="absolute bottom-0 right-1/4 w-[300px] sm:w-[400px] lg:w-[500px] h-[300px] sm:h-[400px] lg:h-[500px] bg-amber-500/5 rounded-full pointer-events-none"></div>
 
   <div class="container mx-auto relative z-10">
     <!-- Header -->
-    <div class="text-center mb-20 md:mb-40">
-      <h2 class="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[0.8] tracking-tighter uppercase mb-8">
+    <div class="text-center mb-12 sm:mb-16 md:mb-24 lg:mb-40">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-[0.8] tracking-tighter uppercase mb-4 sm:mb-6 md:mb-8">
         STRUKTUR<br/>
         <span class="text-transparent bg-clip-text bg-linear-to-b from-primary to-primary/50">PENGURUS</span>
       </h2>
-      <p class="text-white/40 text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed px-4">
+      <p class="text-white/40 text-base sm:text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed px-4">
         Struktur Pengurus MPK SMK Negeri 1 Kandeman Periode 2026/2027
       </p>
     </div>
 
     <div class="max-w-7xl mx-auto">
       <!-- Ketua Umum -->
-      <div class="flex flex-col items-center mb-32">
-        <div class="relative group w-full max-w-4xl">
-          <div class="exec-card relative aspect-3/4 rounded-[40px] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-2xl transition-all duration-500 group-hover:border-amber-500/30">
+      <div class="flex flex-col items-center mb-16 sm:mb-20 md:mb-28 lg:mb-32">
+        <div class="relative group w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
+          <div class="exec-card relative aspect-3/4 rounded-[24px] sm:rounded-[32px] md:rounded-[40px] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-2xl transition-all duration-500 group-hover:border-amber-500/30">
             {/* Main Images */}
             <img 
               src={leader.image} 
               alt={leader.name} 
-              class="exec-img absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 scale-[1.02]"
+              class="exec-img absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 scale-[1.02] no-drag"
             />
             
             {/* Overlays */}
@@ -41,17 +41,17 @@ import { leader, assistants, administration } from "@/data/Executive";
             <div class={`exec-color-overlay absolute inset-0 bg-linear-to-br ${leader.color} to-transparent opacity-0 group-hover:opacity-40 z-20 transition-all duration-500 mix-blend-overlay`}></div>
 
             {/* Content */}
-            <div class="absolute inset-0 p-10 md:p-20 flex flex-col justify-end z-30">
+            <div class="absolute inset-0 p-6 sm:p-8 md:p-12 lg:p-20 flex flex-col justify-end z-30">
               <div class="exec-content relative transition-transform duration-700 group-hover:-translate-y-2">
-                <span class="text-amber-500 font-black tracking-[0.4em] text-sm uppercase block mb-4">{leader.role}</span>
-                <h3 class="text-3xl md:text-6xl font-black text-white uppercase tracking-tighter mb-4 leading-[0.9] drop-shadow-2xl">
+                <span class="text-amber-500 font-black tracking-[0.3em] sm:tracking-[0.4em] text-xs sm:text-sm uppercase block mb-2 sm:mb-3 md:mb-4">{leader.role}</span>
+                <h3 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-white uppercase tracking-tighter mb-2 sm:mb-3 md:mb-4 leading-[0.9] drop-shadow-2xl">
                   {leader.name}
                 </h3>
-                <p class="text-white/60 font-bold text-xl tracking-[0.2em] uppercase mb-10">{leader.class}</p>
+                <p class="text-white/60 font-bold text-base sm:text-lg md:text-xl tracking-[0.15em] sm:tracking-[0.2em] uppercase mb-4 sm:mb-6 md:mb-8 lg:mb-10">{leader.class}</p>
                 
                 <div class="exec-details max-h-0 group-hover:max-h-48 overflow-hidden transition-all duration-700 ease-in-out opacity-0 group-hover:opacity-100">
-                  <div class="pt-10 border-t border-white/10">
-                    <p class="text-white/60 md:text-xl text-lg max-w-2xl leading-relaxed italic">"{leader.description}"</p>
+                  <div class="pt-4 sm:pt-6 md:pt-8 lg:pt-10 border-t border-white/10">
+                    <p class="text-white/60 text-base sm:text-lg md:text-xl max-w-2xl leading-relaxed italic">"{leader.description}"</p>
                   </div>
                 </div>
               </div>
@@ -59,38 +59,38 @@ import { leader, assistants, administration } from "@/data/Executive";
           </div>
         </div>
         
-        <div class="w-px h-32 bg-linear-to-b from-amber-500/50 to-transparent hidden md:block mt-8"></div>
+        <div class="w-px h-16 sm:h-20 md:h-24 lg:h-32 bg-linear-to-b from-amber-500/50 to-transparent hidden md:block mt-4 sm:mt-6 md:mt-8"></div>
       </div>
 
       <!-- Ketua 1 & 2 -->
-      <div class="relative mb-32">
+      <div class="relative mb-16 sm:mb-20 md:mb-28 lg:mb-32">
         <div class="absolute top-0 left-[25%] right-[25%] h-px bg-white/10 hidden md:block"></div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 pt-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 pt-6 sm:pt-8 md:pt-12">
           {assistants.map((member, index) => (
             <div class="flex flex-col items-center">
-              <div class="w-px h-16 bg-white/10 hidden md:block mb-8"></div>
+              <div class="w-px h-10 sm:h-12 md:h-16 bg-white/10 hidden md:block mb-4 sm:mb-6 md:mb-8"></div>
               
               <div class="relative group w-full">
-                <div class="exec-card relative aspect-3/4 rounded-[32px] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-xl transition-all duration-500 group-hover:border-white/20">
+                <div class="exec-card relative aspect-3/4 rounded-[20px] sm:rounded-[24px] md:rounded-[32px] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-xl transition-all duration-500 group-hover:border-white/20">
                   <img 
                     src={member.image} 
                     alt={member.name} 
-                    class="exec-img absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 scale-[1.02]"
+                    class="exec-img absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 scale-[1.02] no-drag"
                   />
                   
                   <div class="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent opacity-80 z-10 transition-opacity duration-500 group-hover:opacity-70"></div>
                   <div class={`exec-color-overlay absolute inset-0 bg-linear-to-br ${member.color} to-transparent opacity-0 group-hover:opacity-40 z-20 transition-all duration-500 mix-blend-overlay`}></div>
 
-                  <div class="absolute inset-0 p-10 md:p-14 flex flex-col justify-end z-30">
+                  <div class="absolute inset-0 p-6 sm:p-8 md:p-10 lg:p-14 flex flex-col justify-end z-30">
                     <div class="exec-content relative transition-transform duration-700 group-hover:-translate-y-2">
-                      <span class="text-primary font-black tracking-widest text-[10px] uppercase block mb-2">{member.role}</span>
-                      <h3 class="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mb-2 leading-none">{member.name}</h3>
-                      <p class="text-white/40 font-bold text-lg tracking-widest mb-8 uppercase">{member.class}</p>
+                      <span class="text-primary font-black tracking-widest text-xs sm:text-sm uppercase block mb-1 sm:mb-2">{member.role}</span>
+                      <h3 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white uppercase tracking-tighter mb-1 sm:mb-2 leading-none">{member.name}</h3>
+                      <p class="text-white/40 font-bold text-base sm:text-lg tracking-widest mb-4 sm:mb-6 md:mb-8 uppercase">{member.class}</p>
                       
                       <div class="exec-details max-h-0 group-hover:max-h-40 overflow-hidden transition-all duration-700 ease-in-out opacity-0 group-hover:opacity-100">
-                        <div class="pt-8 border-t border-white/10">
-                          <p class="text-white/50 text-sm leading-relaxed italic">
+                        <div class="pt-4 sm:pt-6 md:pt-8 border-t border-white/10">
+                          <p class="text-white/50 text-base sm:text-lg leading-relaxed italic">
                             "{member.description}"
                           </p>
                         </div>
@@ -99,12 +99,12 @@ import { leader, assistants, administration } from "@/data/Executive";
                   </div>
 
                   {/* Decorative Role Initial */}
-                  <span class="exec-number absolute -bottom-8 -right-8 text-[150px] md:text-[250px] font-black text-white/5 leading-none select-none group-hover:text-white/10 transition-all duration-700">
+                  <span class="exec-number absolute -bottom-6 sm:-bottom-8 -right-4 sm:-right-8 text-[100px] sm:text-[130px] md:text-[180px] lg:text-[250px] font-black text-white/5 leading-none select-none group-hover:text-white/10 transition-all duration-700">
                     K{index + 1}
                   </span>
                 </div>
               </div>
-              <div class="w-px h-16 bg-white/10 hidden md:block mt-8"></div>
+              <div class="w-px h-10 sm:h-12 md:h-16 bg-white/10 hidden md:block mt-4 sm:mt-6 md:mt-8"></div>
             </div>
           ))}
         </div>
@@ -114,31 +114,31 @@ import { leader, assistants, administration } from "@/data/Executive";
       <div class="relative">
         <div class="absolute top-0 left-[16.6%] right-[16.6%] h-px bg-white/10 hidden md:block"></div>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 pt-6 sm:pt-8 md:pt-12">
           {administration.map((member) => (
             <div class="flex flex-col items-center">
-              <div class="w-px h-12 bg-white/10 hidden md:block mb-8"></div>
+              <div class="w-px h-8 sm:h-10 md:h-12 bg-white/10 hidden md:block mb-4 sm:mb-6 md:mb-8"></div>
               
               <div class="relative group w-full">
-                <div class="exec-card relative aspect-3/4 rounded-[24px] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-lg transition-all duration-500 group-hover:border-white/20">
+                <div class="exec-card relative aspect-3/4 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-lg transition-all duration-500 group-hover:border-white/20">
                   <img 
                     src={member.image} 
                     alt={member.name} 
-                    class="exec-img absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 scale-[1.02]"
+                    class="exec-img absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 scale-[1.02] no-drag"
                   />
                   
                   <div class="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent opacity-80 z-10 transition-opacity duration-500 group-hover:opacity-80"></div>
                   <div class={`exec-color-overlay absolute inset-0 bg-linear-to-br ${member.color} to-transparent opacity-0 group-hover:opacity-30 z-20 transition-all duration-500 mix-blend-overlay`}></div>
 
-                  <div class="absolute inset-0 p-8 flex flex-col justify-end z-30">
+                  <div class="absolute inset-0 p-5 sm:p-6 md:p-8 flex flex-col justify-end z-30">
                     <div class="exec-content relative transition-transform duration-700 group-hover:-translate-y-1">
-                      <span class="text-white/40 font-black tracking-widest text-[9px] uppercase block mb-1">{member.role}</span>
-                      <h3 class="text-2xl font-black text-white uppercase tracking-tight mb-1 leading-tight">{member.name}</h3>
-                      <p class="text-white/40 font-bold text-[10px] tracking-widest mb-6 uppercase">{member.class}</p>
+                      <span class="text-white/40 font-black tracking-widest text-[10px] sm:text-xs uppercase block mb-1">{member.role}</span>
+                      <h3 class="text-xl sm:text-2xl font-black text-white uppercase tracking-tight mb-1 leading-tight">{member.name}</h3>
+                      <p class="text-white/40 font-bold text-[10px] tracking-widest mb-4 sm:mb-6 uppercase">{member.class}</p>
                       
                       <div class="exec-details max-h-0 group-hover:max-h-32 overflow-hidden transition-all duration-700 ease-in-out opacity-0 group-hover:opacity-100">
-                        <div class="pt-6 border-t border-white/5">
-                          <p class="text-white/30 text-sm leading-relaxed italic">
+                        <div class="pt-4 sm:pt-6 border-t border-white/5">
+                          <p class="text-white/50 text-sm sm:text-base leading-relaxed italic">
                             "{member.description}"
                           </p>
                         </div>
@@ -147,7 +147,7 @@ import { leader, assistants, administration } from "@/data/Executive";
                   </div>
 
                   {/* Decorative Role Initial */}
-                  <span class="exec-number absolute -bottom-6 -right-6 text-[120px] md:text-[180px] font-black text-white/5 leading-none select-none group-hover:text-white/10 transition-all duration-700">
+                  <span class="exec-number absolute -bottom-4 sm:-bottom-6 -right-4 sm:-right-6 text-[80px] sm:text-[100px] md:text-[140px] lg:text-[180px] font-black text-white/5 leading-none select-none group-hover:text-white/10 transition-all duration-700">
                     {member.role.substring(0, 3)}
                   </span>
                 </div>
@@ -162,10 +162,10 @@ import { leader, assistants, administration } from "@/data/Executive";
     </div>
 
     <!-- Footer Decorative -->
-    <div class="mt-40 flex flex-col items-center">
-      <div class="w-px h-24 bg-linear-to-b from-white/10 to-transparent mb-8"></div>
+    <div class="mt-16 sm:mt-20 md:mt-28 lg:mt-40 flex flex-col items-center">
+      <div class="w-px h-12 sm:h-16 md:h-20 lg:h-24 bg-linear-to-b from-white/10 to-transparent mb-4 sm:mb-6 md:mb-8"></div>
       <div class="animate-bounce">
-        <ChevronDown class="text-white/20 w-8 h-8" />
+        <ChevronDown class="text-white/20 w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />
       </div>
     </div>
   </div>
@@ -186,7 +186,7 @@ import { leader, assistants, administration } from "@/data/Executive";
     transform: translateY(-0.5rem);
   }
   .group.is-active .exec-details {
-    max-height: 200px;
+    max-height: 160px;
     opacity: 1;
   }
   .group.is-active .exec-number {

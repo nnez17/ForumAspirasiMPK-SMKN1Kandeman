@@ -1,20 +1,19 @@
 ---
-import { UserCheck } from "@lucide/astro";
 import { commissions } from "../data/Commission";
 ---
 
 <section class="w-full bg-black overflow-hidden" id="komisi">
   <!-- Section Title -->
-  <div class="bg-white py-20 px-8 md:px-24">
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
+  <div class="bg-white py-12 sm:py-16 md:py-20 px-6 sm:px-8 md:px-16 lg:px-24">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 sm:gap-8">
       <div>
-        <h2 class="text-4xl md:text-7xl font-black text-gray-900 leading-none tracking-tighter uppercase">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-gray-900 leading-none tracking-tighter uppercase">
           KOMISI<br/>
           <span class="text-primary">MPK </span>
         </h2>
       </div>
       <div class="max-w-md">
-        <p class="text-gray-500 text-lg pb-6 font-medium leading-relaxed">
+        <p class="text-gray-500 text-base sm:text-lg pb-4 sm:pb-6 font-medium leading-relaxed">
           Dibawah naungan MPK, terdapat 4 Komisi yang menjadi ujung tombak roda organisasi yang berdedikasi tinggi.
         </p>
       </div>
@@ -29,7 +28,7 @@ import { commissions } from "../data/Commission";
         <img 
           src={komisi.image} 
           alt={komisi.subtitle} 
-          class="komisi-img absolute inset-0 w-full h-full border-l-2 border-r-2 border-b-2 border-black/10 object-cover group-hover:scale-105 transition-transform duration-300 scale-[1.02]"
+          class="komisi-img absolute inset-0 w-full h-full border-l-2 border-r-2 border-b-2 border-black/10 object-cover group-hover:scale-105 transition-transform duration-300 scale-[1.02] no-drag"
         />
         
         {/* Overlays */}
@@ -37,39 +36,39 @@ import { commissions } from "../data/Commission";
         <div class={`komisi-color-overlay absolute inset-0 bg-linear-to-br ${komisi.color} to-transparent opacity-0 group-hover:opacity-40 z-20 transition-opacity duration-200`}></div>
 
         {/* Content */}
-        <div class="absolute inset-0 p-8 md:p-16 flex flex-col justify-end">
+        <div class="absolute inset-0 p-5 sm:p-6 md:p-8 lg:p-12 xl:p-16 flex flex-col justify-end">
           {/* Main Text */}
           <div class="komisi-content relative z-10 transition-transform duration-500 group-hover:-translate-y-1">
-            <span class="text-primary font-black tracking-widest text-sm uppercase block mb-4">{komisi.title}</span>
-            <h3 class="text-3xl md:text-6xl font-black text-white mb-2 uppercase leading-none tracking-tighter">
+            <span class="text-primary font-black tracking-widest text-xs sm:text-sm uppercase block mb-2 sm:mb-3 md:mb-4">{komisi.title}</span>
+            <h3 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-white mb-1 sm:mb-2 uppercase leading-none tracking-tighter">
               {komisi.subtitle}
             </h3>
-            <p class="text-primary font-bold text-lg mb-6 uppercase tracking-wider">{komisi.fullName}</p>
+            <p class="text-primary font-bold text-sm sm:text-base md:text-lg mb-3 sm:mb-4 md:mb-6 uppercase tracking-wider">{komisi.fullName}</p>
             
-            <p class="komisi-desc text-white/60 text-lg max-w-md mb-8 leading-relaxed italic group-hover:text-white transition-colors duration-300">
+            <p class="komisi-desc text-white/60 text-xs sm:text-sm md:text-base lg:text-lg max-w-md mb-4 sm:mb-6 md:mb-8 leading-relaxed italic group-hover:text-white transition-colors duration-300">
               "{komisi.description}"
             </p>
 
             {/* Expanded Details */}
             <div class="komisi-details max-h-0 group-hover:max-h-[400px] opacity-0 group-hover:opacity-100 overflow-hidden transition-all duration-700 ease-in-out">
-              <div class="pt-8 border-t border-white/20">
+              <div class="pt-4 sm:pt-6 md:pt-8 border-t border-white/20">
                 {/* Coordinator */}
-                <div class="flex items-center gap-4 mb-8">
+                <div class="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
                   <div>
-                    <span class="text-[10px] text-primary font-black uppercase tracking-[0.3em] block mb-1">Koordinator Komisi</span>
-                    <h4 class="text-xl font-bold text-white">{komisi.coordinator.name}</h4>
-                    <p class="text-white/50 text-sm">{komisi.coordinator.class}</p>
+                    <span class="text-[9px] sm:text-[10px] text-primary font-black uppercase tracking-[0.3em] block mb-1">Koordinator Komisi</span>
+                    <h4 class="text-base sm:text-lg md:text-xl font-bold text-white">{komisi.coordinator.name}</h4>
+                    <p class="text-white/50 text-xs sm:text-sm">{komisi.coordinator.class}</p>
                   </div>
                 </div>
 
                 {/* Members */}
                 <div>
-                  <span class="text-[10px] text-white/40 font-black uppercase tracking-[0.3em] block mb-4">Anggota Komisi</span>
-                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+                  <span class="text-[9px] sm:text-[10px] text-white/40 font-black uppercase tracking-[0.3em] block mb-2 sm:mb-3 md:mb-4">Anggota Komisi</span>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 sm:gap-x-6 gap-y-1.5 sm:gap-y-2">
                     {komisi.members.map((member) => (
-                      <div class="flex items-center gap-3">
-                        <div class="w-1.5 h-1.5 rounded-full bg-primary/60"></div>
-                        <span class="text-sm text-white/70 font-medium">{member}</span>
+                      <div class="flex items-center gap-2 sm:gap-3">
+                        <div class="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-primary/60"></div>
+                        <span class="text-xs sm:text-sm text-white/70 font-medium">{member}</span>
                       </div>
                     ))}
                   </div>
@@ -80,7 +79,7 @@ import { commissions } from "../data/Commission";
         </div>
 
         {/* Number */}
-        <span class="komisi-number absolute -bottom-1 -right-10 text-[200px] md:text-[300px] font-black text-white/10 leading-none select-none group-hover:text-white/20 transition-all duration-500">
+        <span class="komisi-number absolute -bottom-1 -right-6 sm:-right-8 md:-right-10 text-[120px] sm:text-[160px] md:text-[200px] lg:text-[250px] xl:text-[300px] font-black text-white/10 leading-none select-none group-hover:text-white/20 transition-all duration-500">
           {komisi.id}
         </span>
       </div>
@@ -103,7 +102,7 @@ import { commissions } from "../data/Commission";
     color: white;
   }
   .group.is-active .komisi-details {
-    max-height: 400px;
+    max-height: 280px;
     opacity: 1;
   }
   .group.is-active .komisi-number {
