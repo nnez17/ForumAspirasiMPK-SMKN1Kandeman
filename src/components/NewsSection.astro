@@ -1,28 +1,35 @@
 ---
-import { ArrowRight, ChevronLeft, ChevronRight, Clock, Search, User } from '@lucide/astro';
-import { newsData } from '../data/News';
+import {
+	ArrowRight,
+	ChevronLeft,
+	ChevronRight,
+	Clock,
+	Search,
+	User,
+} from "@lucide/astro";
+import { newsData } from "../data/News";
 ---
 
-<section class="container mx-auto px-4 py-12" id="berita">
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<section class="container mx-auto px-4 sm:px-6 py-8 sm:py-10 md:py-12" id="berita">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
     <!-- Main News Carousel -->
     <div class="lg:col-span-2 flex flex-col relative group">
-      <div class="flex items-center justify-between mb-6">
-        <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Berita Terbaru</h2>
+      <div class="flex items-center justify-between mb-4 sm:mb-6">
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">Berita Terbaru</h2>
         <div class="flex gap-2">
           <button 
             id="news-prev" 
-            class="w-10 h-10 rounded-full border border-gray-200 bg-white flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            class="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-gray-200 bg-white flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Previous news"
           >
-            <ChevronLeft class="w-5 h-5" />
+            <ChevronLeft class="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
           <button 
             id="news-next" 
-            class="w-10 h-10 rounded-full border border-gray-200 bg-white flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            class="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-gray-200 bg-white flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Next news"
           >
-            <ChevronRight class="w-5 h-5" />
+            <ChevronRight class="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
       </div>
@@ -33,29 +40,29 @@ import { newsData } from '../data/News';
       >
         {newsData.map((news) => (
           <div class="min-w-full snap-start">
-            <div class="rounded-3xl overflow-hidden border border-gray-200 bg-white shadow-sm h-full flex flex-col">
-              <div class="relative h-64 sm:h-80 w-full overflow-hidden">
+            <div class="rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-200 bg-white shadow-sm h-full flex flex-col">
+              <div class="relative h-48 sm:h-64 md:h-72 lg:h-80 w-full overflow-hidden">
                 <img 
                   src={news.image} 
                   alt={news.title} 
                   class="object-cover w-full h-full" 
                 />
-                <div class="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
+                <div class="absolute top-3 left-3 sm:top-4 sm:left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full no-drag">
                   {news.category}
                 </div>
               </div>
-              <div class="p-6 md:p-8 flex flex-col flex-1 items-start">
-                <div class="flex items-center text-sm text-gray-500 mb-4 gap-4">
+              <div class="p-4 sm:p-6 md:p-8 flex flex-col flex-1 items-start">
+                <div class="flex items-center text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4 gap-3 sm:gap-4">
                   <span class="flex items-center gap-1"><Clock class="w-3.5 h-3.5" /> {news.date}</span>
                   <span class="flex items-center gap-1"><User class="w-3.5 h-3.5" /> {news.author}</span>
                 </div>
-                <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4 leading-tight cursor-pointer line-clamp-2">
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight cursor-pointer line-clamp-2">
                   {news.title}
                 </h3>
-                <p class="text-gray-600 mb-6 line-clamp-3">
+                <p class="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 line-clamp-3">
                   {news.excerpt}
                 </p>
-                <a href={news.link} class="mt-auto inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 py-2">
+                <a href={news.link} class="mt-auto inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 sm:h-10 px-4 sm:px-6 py-2">
                   Baca Selengkapnya
                   <ArrowRight class="ml-2 w-4 h-4" />
                 </a>
@@ -67,10 +74,10 @@ import { newsData } from '../data/News';
     </div>
 
     <!-- Sidebar -->
-    <div class="flex flex-col gap-6 pt-16 lg:pt-0">
+    <div class="flex flex-col gap-4 sm:gap-6 pt-8 lg:pt-0">
       <!-- Search -->
-      <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-        <h4 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
+      <div class="bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-gray-100">
+        <h4 class="font-bold text-gray-900 mb-3 sm:mb-4 flex items-center gap-2 text-sm sm:text-base">
           <Search class="w-[18px] h-[18px] text-primary" />
           Cari Berita
         </h4>
@@ -83,11 +90,11 @@ import { newsData } from '../data/News';
       </div>
 
       <!-- Important Info -->
-      <div class="bg-[#f4f6f9] rounded-2xl  overflow-hidden shadow-sm">
-        <div class="bg-[#3C4048] px-6 py-3 border-b border-gray-700">
+      <div class="bg-[#f4f6f9] rounded-xl sm:rounded-2xl overflow-hidden shadow-sm">
+        <div class="bg-[#3C4048] px-4 sm:px-6 py-3 border-b border-gray-700">
           <h4 class="font-bold text-white text-sm tracking-wider uppercase">Info Penting</h4>
         </div>
-        <div class="p-4 flex flex-col gap-4">
+        <div class="p-3 sm:p-4 flex flex-col gap-3 sm:gap-4">
           <div class="flex gap-3">
             <span class="bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded h-fit uppercase whitespace-nowrap">NEW</span>
             <p class="text-sm text-black leading-tight font-medium">BACKEND OYYYYYYYYY</p>
