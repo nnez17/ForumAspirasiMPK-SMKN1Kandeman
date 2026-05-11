@@ -1,5 +1,5 @@
-import { db } from "@/lib/firebase";
 import { Elysia, t } from "elysia";
+import { db } from "@/lib/firebase";
 import admin from "./middleware/admin";
 
 export default new Elysia({

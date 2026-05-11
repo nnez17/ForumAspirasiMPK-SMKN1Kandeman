@@ -1,6 +1,6 @@
 <script lang="ts">
-import { useSidebar } from "@/components/ui/sidebar";
 import type { HTMLAttributes } from "svelte/elements";
+import { useSidebar } from "@/components/ui/sidebar";
 
 let {
 	href,

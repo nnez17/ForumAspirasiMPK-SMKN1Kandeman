@@ -1,5 +1,5 @@
-import { Elysia, redirect } from "elysia";
 import { openapi } from "@elysia/openapi";
+import { Elysia, redirect } from "elysia";
 import aspirasi from "./aspirasi";
 import news from "./news";
 

@@ -1,7 +1,7 @@
 <script lang="ts">
-import { useSidebar } from "@/components/ui/sidebar";
-import { Button } from "@/components/ui/button";
 import { Menu } from "@lucide/svelte";
+import { Button } from "@/components/ui/button";
+import { useSidebar } from "@/components/ui/sidebar";
 
 const sidebar = useSidebar();
 </script>

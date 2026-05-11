@@ -7,8 +7,8 @@ import {
 	Search,
 	User,
 } from "@lucide/astro";
-import { newsData as staticNewsData, type NewsItem } from "../data/News";
 import { app } from "@/api/elysia";
+import { type NewsItem, newsData as staticNewsData } from "../data/News";
 
 const response = await app.handle(
 	new Request("http://localhost:4321/api/news"),
