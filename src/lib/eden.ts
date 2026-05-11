@@ -6,4 +6,4 @@ const getBaseUrl = () => {
 	return "http://localhost:4321";
 };
 
-export const api = treaty<App>(getBaseUrl());
+export const { api } = treaty<App>(getBaseUrl());
