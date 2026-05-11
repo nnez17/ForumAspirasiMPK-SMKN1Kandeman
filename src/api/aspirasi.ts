@@ -6,33 +6,8 @@ export default new Elysia({
 	prefix: "/aspirasi",
 	detail: {
 		tags: ["Aspirasi"],
-		security: [
-			{
-				"x-api-key": [],
-			},
-		],
 	},
 })
-	.use(admin)
-	.get("/", async () => {
-		const result = await sheets.spreadsheets.values.get({
-			spreadsheetId: "1ef9jf0dsJMIPVHouGG-DGKOKY26YqB1NJ0MSRy033bY",
-			range: "A2:G",
-		});
-		return {
-			success: true,
-			message: "Data aspirasi berhasil diambil",
-			data: result.data.values?.map((item) => ({
-				email: item[1],
-				name: item[2],
-				class: item[3],
-				status: item[4],
-				content: item[5],
-				proof: item[6],
-				timestamp: item[0],
-			})),
-		};
-	})
 	.get("/stats", async () => {
 		const result = await sheets.spreadsheets.values.get({
 			spreadsheetId: "1ef9jf0dsJMIPVHouGG-DGKOKY26YqB1NJ0MSRy033bY",
@@ -58,4 +33,37 @@ export default new Elysia({
 					).length || 0,
 			},
 		};
-	});
+	})
+
+	.use(admin)
+	.get(
+		"/",
+		async () => {
+			const result = await sheets.spreadsheets.values.get({
+				spreadsheetId: "1ef9jf0dsJMIPVHouGG-DGKOKY26YqB1NJ0MSRy033bY",
+				range: "A2:G",
+			});
+			return {
+				success: true,
+				message: "Data aspirasi berhasil diambil",
+				data: result.data.values?.map((item) => ({
+					email: item[1],
+					name: item[2],
+					class: item[3],
+					status: item[4],
+					content: item[5],
+					proof: item[6],
+					timestamp: item[0],
+				})),
+			};
+		},
+		{
+			detail: {
+				security: [
+					{
+						"x-api-key": [],
+					},
+				],
+			},
+		},
+	);

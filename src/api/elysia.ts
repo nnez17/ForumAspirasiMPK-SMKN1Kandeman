@@ -2,6 +2,7 @@ import { openapi } from "@elysia/openapi";
 import { Elysia, redirect } from "elysia";
 import aspirasi from "./aspirasi";
 import news from "./news";
+import key from "./key";
 
 export const app = new Elysia({ prefix: "/api" })
 	.use(
@@ -27,6 +28,7 @@ export const app = new Elysia({ prefix: "/api" })
 	)
 	.use(aspirasi)
 	.use(news)
+	.use(key)
 	.get("/", () => redirect("/api/docs"), { detail: { hide: true } });
 
 export type App = typeof app;
