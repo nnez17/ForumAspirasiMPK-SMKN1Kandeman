@@ -103,17 +103,17 @@ async function handleLogin(e: Event) {
 			query: { secret: passwordInput },
 		});
 
-		if (error || !data || !data.success || !("key" in data)) {
+		if (error || !data || !data.success || !data.data?.key) {
 			addToast(
 				"Gagal Masuk",
-				(data as any)?.message || "Password salah atau akses ditolak.",
+				"Password salah. Silahkan coba lagi.",
 				"destructive",
 			);
 			isLoggingIn = false;
 			return;
 		}
 
-		apiKey = data.key as string;
+		apiKey = data.data.key;
 		localStorage.setItem("admin_xkey", apiKey);
 		localStorage.setItem("admin_authenticated", "true");
 		isAuthenticated = true;
