@@ -4,7 +4,6 @@
 @import "@fontsource-variable/inter";
 @import "shadcn-svelte/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
 
 @theme inline {
 	--font-heading: var(--font-sans);
@@ -56,7 +55,7 @@
 	--card-foreground: #111111;
 	--popover: #ffffff;
 	--popover-foreground: #111111;
-	--primary: #0056b3;
+	--primary: #0066ff;
 	--primary-foreground: #ffffff;
 	--secondary: #ffcc00;
 	--secondary-foreground: #111111;
@@ -67,48 +66,19 @@
 	--destructive: #ef4444;
 	--border: #e2e8f0;
 	--input: #e2e8f0;
-	--ring: #0056b3;
+	--ring: #0066ff;
 	--radius: 0.625rem;
 
 	--sidebar: #ffffff;
 	--sidebar-foreground: #111111;
-	--sidebar-primary: #0056b3;
+	--sidebar-primary: #0066ff;
 	--sidebar-primary-foreground: #ffffff;
 	--sidebar-accent: #f1f5f9;
 	--sidebar-accent-foreground: #0f172a;
 	--sidebar-border: #e2e8f0;
-	--sidebar-ring: #0056b3;
+	--sidebar-ring: #0066ff;
 }
 
-.dark {
-	--background: #020817;
-	--foreground: #f8fafc;
-	--card: #020817;
-	--card-foreground: #f8fafc;
-	--popover: #020817;
-	--popover-foreground: #f8fafc;
-	--primary: #0056b3;
-	--primary-foreground: #ffffff;
-	--secondary: #ffcc00;
-	--secondary-foreground: #111111;
-	--muted: #1e293b;
-	--muted-foreground: #94a3b8;
-	--accent: #1e293b;
-	--accent-foreground: #f8fafc;
-	--destructive: #7f1d1d;
-	--border: #1e293b;
-	--input: #1e293b;
-	--ring: #0056b3;
-
-	--sidebar: #020817;
-	--sidebar-foreground: #f8fafc;
-	--sidebar-primary: #0056b3;
-	--sidebar-primary-foreground: #ffffff;
-	--sidebar-accent: #1e293b;
-	--sidebar-accent-foreground: #f8fafc;
-	--sidebar-border: #1e293b;
-	--sidebar-ring: #0056b3;
-}
 
 @layer base {
 	* {
@@ -124,6 +94,41 @@
 
 * {
 	scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+@layer base {
+	::-webkit-scrollbar {
+		width: 12px;
+		height: 12px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: #0f172a;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: color-mix(in srgb, var(--primary) 80%, transparent);
+		border-radius: 100px;
+		border: 2px solid #0f172a;
+		transition: all 0.3s ease;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background: var(--secondary);
+	}
+
+	/* Firefox support */
+	* {
+		scrollbar-width: thin;
+		scrollbar-color: var(--primary) #0f172a;
+	}
+
+	/* Selection Color */
+	::selection {
+		background: var(--primary);
+		color: var(--primary-foreground);
+	}
 }
 
 .no-drag {
