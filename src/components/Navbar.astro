@@ -1,17 +1,28 @@
 ---
 import MobileMenu from "./MobileMenu.svelte";
+
+const { isAdmin = false } = Astro.props;
+
+const adminLinks = [
+	{ name: "Beranda", href: "/" },
+	{ name: "Admin", href: "/admin" },
+];
 ---
 
 <header class="sticky top-0 z-100 w-full shadow-md border-b border-white/10 backdrop-blur-xl">
   <div class="container mx-auto px-4 h-16 flex items-center">
     <!-- Mobile Menu Trigger -->
     <div class="mobile-trigger items-center mr-2">
-      <MobileMenu client:load />
+      {isAdmin ? (
+        <MobileMenu client:load links={adminLinks} />
+      ) : (
+        <MobileMenu client:load />
+      )}
     </div>
 
     <!-- Name-->
     <div class="flex items-center flex-1 md:flex-none">
-      <a href="#home">
+      <a href="/">
         <h1 class="font-extrabold text-lg sm:text-xl text-primary hover:underline cursor-pointer tracking-tight">
           MPK SMKN 1 KANDEMAN
         </h1>
@@ -20,36 +31,55 @@ import MobileMenu from "./MobileMenu.svelte";
 
     <!-- Desktop Nav -->
     <nav class="desktop-nav items-center h-full gap-1 ml-auto">
-      <a href="#home" class="nav-link relative h-full flex items-center px-4 text-sm font-bold text-primary transition-all hover:text-primary shrink-0 whitespace-nowrap group">
-        <span class="relative py-1">
-          Beranda
-          <div class="nav-border absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full transition-all"></div>
-        </span>
-      </a>
-      <a href="#berita" class="nav-link relative h-full flex items-center px-4 text-sm font-bold text-muted-foreground transition-all hover:text-primary shrink-0 whitespace-nowrap group">
-        <span class="relative py-1">
-          Berita
-          <div class="nav-border absolute -bottom-1 left-0 w-full h-0 bg-primary rounded-full transition-all"></div>
-        </span>
-      </a>
-      <a href="#pengurus" class="nav-link relative h-full flex items-center px-4 text-sm font-bold text-muted-foreground transition-all hover:text-primary shrink-0 whitespace-nowrap group">
-        <span class="relative py-1">
-          Pengurus
-          <div class="nav-border absolute -bottom-1 left-0 w-full h-0 bg-primary rounded-full transition-all"></div>
-        </span>
-      </a>
-      <a href="#kontak" class="nav-link relative h-full flex items-center px-4 text-sm font-bold text-muted-foreground transition-all hover:text-primary shrink-0 whitespace-nowrap group">
-        <span class="relative py-1">
-          Kontak
-          <div class="nav-border absolute -bottom-1 left-0 w-full h-0 bg-primary rounded-full transition-all"></div>
-        </span>
-      </a>
-      <a href="/admin" class="nav-link relative h-full flex items-center px-4 text-sm font-bold text-muted-foreground transition-all hover:text-primary shrink-0 whitespace-nowrap group">
-        <span class="relative py-1">
-          Admin
-          <div class="nav-border absolute -bottom-1 left-0 w-full h-0 bg-primary rounded-full transition-all"></div>
-        </span>
-      </a>
+      {isAdmin ? (
+        <>
+          <a href="/" class="nav-link relative h-full flex items-center px-4 text-sm font-bold text-muted-foreground transition-all hover:text-primary shrink-0 whitespace-nowrap group">
+            <span class="relative py-1">
+              Beranda
+              <div class="nav-border absolute -bottom-1 left-0 w-full h-0 bg-primary rounded-full transition-all"></div>
+            </span>
+          </a>
+          <a href="/admin" class="nav-link relative h-full flex items-center px-4 text-sm font-bold text-primary transition-all hover:text-primary shrink-0 whitespace-nowrap group">
+            <span class="relative py-1">
+              Admin
+              <div class="nav-border absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full transition-all"></div>
+            </span>
+          </a>
+        </>
+      ) : (
+        <>
+          <a href="#home" class="nav-link relative h-full flex items-center px-4 text-sm font-bold text-primary transition-all hover:text-primary shrink-0 whitespace-nowrap group">
+            <span class="relative py-1">
+              Beranda
+              <div class="nav-border absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full transition-all"></div>
+            </span>
+          </a>
+          <a href="#berita" class="nav-link relative h-full flex items-center px-4 text-sm font-bold text-muted-foreground transition-all hover:text-primary shrink-0 whitespace-nowrap group">
+            <span class="relative py-1">
+              Berita
+              <div class="nav-border absolute -bottom-1 left-0 w-full h-0 bg-primary rounded-full transition-all"></div>
+            </span>
+          </a>
+          <a href="#pengurus" class="nav-link relative h-full flex items-center px-4 text-sm font-bold text-muted-foreground transition-all hover:text-primary shrink-0 whitespace-nowrap group">
+            <span class="relative py-1">
+              Pengurus
+              <div class="nav-border absolute -bottom-1 left-0 w-full h-0 bg-primary rounded-full transition-all"></div>
+            </span>
+          </a>
+          <a href="#kontak" class="nav-link relative h-full flex items-center px-4 text-sm font-bold text-muted-foreground transition-all hover:text-primary shrink-0 whitespace-nowrap group">
+            <span class="relative py-1">
+              Kontak
+              <div class="nav-border absolute -bottom-1 left-0 w-full h-0 bg-primary rounded-full transition-all"></div>
+            </span>
+          </a>
+          <a href="/admin" class="nav-link relative h-full flex items-center px-4 text-sm font-bold text-muted-foreground transition-all hover:text-primary shrink-0 whitespace-nowrap group">
+            <span class="relative py-1">
+              Admin
+              <div class="nav-border absolute -bottom-1 left-0 w-full h-0 bg-primary rounded-full transition-all"></div>
+            </span>
+          </a>
+        </>
+      )}
     </nav>
   </div>
 </header>
@@ -77,13 +107,20 @@ import MobileMenu from "./MobileMenu.svelte";
 <script>
   function initNav() {
     const navLinks = document.querySelectorAll('.nav-link');
+    const sections = ['home', 'berita', 'pengurus', 'komisi', 'kontak'];
+    const sectionElements = sections.map(id => document.getElementById(id)).filter(el => el !== null);
     
-    function updateActiveState() {
-      const currentHash = window.location.hash;
+    function setActiveLink(activeHref: string) {
       const currentPath = window.location.pathname;
+      const isLandingPage = currentPath === '/' || currentPath === '/index.html';
+      const hrefMap: Record<string, string> = {
+        '#komisi': '#pengurus'
+      };
+      
+      const mappedHref = hrefMap[activeHref] || activeHref;
 
       navLinks.forEach(link => {
-        const border = link.querySelector('div');
+        const border = link.querySelector('.nav-border');
         const href = link.getAttribute('href');
         if (!href) return;
 
@@ -91,8 +128,7 @@ import MobileMenu from "./MobileMenu.svelte";
         let isActive = false;
 
         if (isHashLink) {
-          const activeHash = currentHash || '#home';
-          isActive = href === activeHash;
+          isActive = isLandingPage && href === mappedHref;
         } else {
           isActive = currentPath === href || currentPath === href + '/';
         }
@@ -100,27 +136,56 @@ import MobileMenu from "./MobileMenu.svelte";
         if (isActive) {
           link.classList.add('text-primary');
           link.classList.remove('text-muted-foreground');
-          if (border) border.classList.replace('h-0', 'h-0.5');
+          if (border) {
+            border.classList.remove('h-0');
+            border.classList.add('h-0.5');
+          }
         } else {
           link.classList.remove('text-primary');
           link.classList.add('text-muted-foreground');
-          if (border) border.classList.replace('h-0.5', 'h-0');
+          if (border) {
+            border.classList.remove('h-0.5');
+            border.classList.add('h-0');
+          }
         }
       });
     }
 
-    updateActiveState();
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -70% 0px',
+      threshold: 0
+    };
 
-    navLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        const href = link.getAttribute('href');
-        if (href?.startsWith('#')) {
-          setTimeout(updateActiveState, 0);
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          setActiveLink(`#${id}`);
         }
       });
-    });
+    }, observerOptions);
 
-    window.addEventListener('hashchange', updateActiveState);
+    sectionElements.forEach(section => observer.observe(section));
+
+    function handleInitialState() {
+      const currentPath = window.location.pathname;
+      if (currentPath === '/admin' || currentPath === '/admin/') {
+        setActiveLink('/admin');
+      } else if (window.location.hash) {
+        setActiveLink(window.location.hash);
+      } else if (window.scrollY < 100) {
+        setActiveLink('#home');
+      }
+    }
+
+    handleInitialState();
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY < 50) {
+        setActiveLink('#home');
+      }
+    }, { passive: true });
   }
 
   initNav();

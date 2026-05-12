@@ -1,0 +1,11 @@
+---
+import AdminContentApp from "./AdminContentApp.svelte";
+---
+
+<AdminContentApp client:only="svelte" />
+
+<style is:global>
+    html {
+        scroll-padding-top: 100px;
+    }
+</style>

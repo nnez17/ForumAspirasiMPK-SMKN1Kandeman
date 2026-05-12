@@ -1,5 +1,4 @@
-import { Lightbulb, Megaphone, Share2, Users } from "@lucide/astro";
-import type { LucideIcon } from "@lucide/svelte";
+const color = "from-blue-600/40";
 
 interface Person {
 	id: string;
@@ -7,7 +6,6 @@ interface Person {
 	subtitle: string;
 	fullName: string;
 	description: string;
-	icon: LucideIcon;
 	image: string;
 	coordinator: {
 		name: string;
@@ -24,7 +22,6 @@ export const commissions: Person[] = [
 		fullName: "Penelitian dan Pengembangan",
 		description:
 			"Mengembangkan inovasi dan mengevaluasi untuk meningkatkan kinerja tiap anggota serta keberlanjutan organisasi secara menyeluruh.",
-		icon: Lightbulb,
 		image: "/images/komisi-a.webp",
 		coordinator: {
 			name: "Muhamad Hafidz Ramdhani",
@@ -36,7 +33,7 @@ export const commissions: Person[] = [
 			"Muhamad Facri Aqbar (X TKL 1)",
 			"Habibburachman Sachputra (X TO 4)",
 		],
-		color: "from-blue-600/50",
+		color: color,
 	},
 	{
 		id: "B",
@@ -45,7 +42,6 @@ export const commissions: Person[] = [
 		fullName: "Pengawasan & Aspirasi",
 		description:
 			"Mengawasi setiap ekstrakulikuler di SMK Negeri 1 Kandeman serta mengelola aspirasi warga sekolah demi terciptanya lingkungan yang harmonis.",
-		icon: Users,
 		image: "/images/komisi-b.webp",
 		coordinator: {
 			name: "Leny Khoirina",
@@ -58,7 +54,7 @@ export const commissions: Person[] = [
 			"Silvia Apriliani (X TE 3)",
 			"Muhammad Wahyu Sandi (X TO 5)",
 		],
-		color: "from-amber-600/50",
+		color: color,
 	},
 	{
 		id: "C",
@@ -67,7 +63,6 @@ export const commissions: Person[] = [
 		fullName: "Hubungan Masyarakat",
 		description:
 			"Menyampaikan informasi penting, menjadi penghubung warga sekolah, serta mengevaluasi laporan pertanggungjawaban organisasi.",
-		icon: Megaphone,
 		image: "/images/komisi-c.webp",
 		coordinator: {
 			name: "Muhammad Arya Ibrahim",
@@ -81,7 +76,7 @@ export const commissions: Person[] = [
 			"Devi Aulia Putri (X TE 1)",
 			"Dimas Slamet Saputra (X TM 1)",
 		],
-		color: "from-emerald-600/50",
+		color: color,
 	},
 	{
 		id: "D",
@@ -90,7 +85,6 @@ export const commissions: Person[] = [
 		fullName: "Media & Komunikasi",
 		description:
 			"Mengelola media sosial, mendokumentasikan setiap kegiatan, serta menyebarkan informasi inspiratif kepada seluruh warga sekolah.",
-		icon: Share2,
 		image: "/images/komisi-d.webp",
 		coordinator: {
 			name: "Egi Ardana",
@@ -102,6 +96,6 @@ export const commissions: Person[] = [
 			"Tetian Virgiani (X TE 4)",
 			"Royyan Dhillil Iman (X TM 2)",
 		],
-		color: "from-rose-600/50",
+		color: color,
 	},
 ];
