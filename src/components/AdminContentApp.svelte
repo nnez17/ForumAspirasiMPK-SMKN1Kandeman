@@ -271,11 +271,21 @@ async function deleteNews(id: string) {
 	if (!confirm("Yakin ingin menghapus berita ini?")) return;
 
 	try {
+		const newsItem = newsList.find((n) => n.id === id);
+
 		const { data } = await api.news({ id }).delete(null, {
 			headers: { "x-api-key": apiKey },
 		});
 
 		if (data?.success) {
+			if (newsItem?.image?.startsWith("/api/misc/images/")) {
+				const imagePath = newsItem.image.replace("/api/misc/images/", "");
+				// @ts-expect-error this work perfectly fine, idk why eden keeps complaining
+				await api.misc.images({ "*": imagePath }).delete(null, {
+					headers: { "x-api-key": apiKey },
+				});
+			}
+
 			addToast("Berhasil", "Konten berhasil dihapus.");
 			fetchData();
 		} else {
