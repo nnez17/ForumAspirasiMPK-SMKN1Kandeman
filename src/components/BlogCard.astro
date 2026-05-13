@@ -1,23 +1,50 @@
 ---
-import { ArrowRight, Clock, User } from "@lucide/astro";
+import { ArrowRight, Clock, User, Newspaper } from "@lucide/astro";
 import type { NewsItem } from "@/data/News";
 
 interface Props {
 	news: NewsItem;
+	searchQuery?: string;
 }
 
-const { news } = Astro.props;
+const { news, searchQuery = "" } = Astro.props;
+
+function highlightText(text: string, query: string) {
+	if (!query) return text;
+    // Escape text to prevent XSS since we're using set:html
+    const safeText = text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+        
+	const parts = safeText.split(new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, "gi"));
+	return parts
+		.map((part) =>
+			part.toLowerCase() === query.toLowerCase()
+				? `<span class="text-blue-600 font-bold bg-blue-50 rounded-sm px-0.5">${part}</span>`
+				: part,
+		)
+		.join("");
+}
 ---
 
 <article class="group flex flex-col bg-card rounded-2xl border border-border shadow-sm overflow-hidden">
     <div class="relative aspect-video overflow-hidden">
-        <img 
-            src={news.image} 
-            alt={news.title} 
-            class="object-cover w-full h-full" 
-        />
+        {news.image ? (
+            <img 
+                src={news.image} 
+                alt={news.title} 
+                class="object-cover w-full h-full" 
+            />
+        ) : (
+            <div class="w-full h-full bg-linear-to-br from-primary/20 via-primary/10 to-background flex items-center justify-center">
+                <Newspaper class="w-8 h-8 text-primary/40" />
+            </div>
+        )}
         <div class="absolute top-4 left-4 bg-primary text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">
-            {news.category.toUpperCase()}
+            {news.category?.toUpperCase() || "BERITA"}
         </div>
     </div>
     <div class="p-6 flex flex-col flex-1">
@@ -27,10 +54,9 @@ const { news } = Astro.props;
             <span class="flex items-center gap-1.5"><User class="w-3.5 h-3.5" /> {news.author}</span>
         </div>
         <h2 class="text-xl font-bold text-foreground mb-3 line-clamp-2 leading-tight">
-            {news.title}
+            <a href={`/blog/${news.id}`} class="hover:text-primary transition-colors" set:html={highlightText(news.title, searchQuery)} />
         </h2>
-        <p class="text-sm text-muted-foreground line-clamp-3 mb-6 flex-1">
-            {news.excerpt}
+        <p class="text-sm text-muted-foreground line-clamp-3 mb-6 flex-1" set:html={highlightText(news.excerpt, searchQuery)}>
         </p>
         <a 
             href={`/blog/${news.id}`} 

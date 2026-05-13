@@ -50,7 +50,7 @@ function isNewItem(createdAt: string) {
           <div class="relative aspect-video w-full overflow-hidden">
             {highlightNews.image ? (
               <img 
-                src={highlightNews.image} 
+                src={highlightNews.image}   5
                 alt={highlightNews.title} 
                 class="object-cover w-full h-full" 
               />
@@ -96,12 +96,12 @@ function isNewItem(createdAt: string) {
           <Search class="w-[18px] h-[18px] text-primary" />
           Cari Berita
         </h4>
-        <div class="relative">
-          <input type="text" placeholder="Cari artikel..." class="w-full h-10 px-4 rounded-lg border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm" />
-          <button class="absolute right-1 top-1 w-8 h-8 bg-primary rounded text-white flex items-center justify-center hover:bg-primary/90 transition-colors">
+        <form action="/blog" method="GET" class="relative">
+          <input type="text" name="q" placeholder="Cari artikel..." class="w-full h-10 px-4 rounded-lg border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm" />
+          <button type="submit" class="absolute right-1 top-1 w-8 h-8 bg-primary rounded text-white flex items-center justify-center hover:bg-primary/90 transition-colors">
             <ChevronRight class="w-3.5 h-3.5" />
           </button>
-        </div>
+        </form>
       </div>
 
       <!-- Important Info -->

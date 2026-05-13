@@ -1,5 +1,5 @@
 ---
-import { User, ChevronLeft, Calendar } from "@lucide/astro";
+import { User, ChevronLeft, Calendar, Newspaper } from "@lucide/astro";
 import type { NewsItem } from "@/data/News";
 import snarkdown from "snarkdown";
 
@@ -34,11 +34,17 @@ const { news } = Astro.props;
 
     <!-- Featured Image -->
     <div class="mb-12">
-        <img 
-            src={news.image} 
-            alt={news.title} 
-            class="relative aspect-video overflow-hidden rounded-xl shadow-lg mx-auto max-w-full h-auto object-cover border border-gray-100" 
-        />
+        {news.image ? (
+            <img 
+                src={news.image} 
+                alt={news.title} 
+                class="relative aspect-video overflow-hidden rounded-xl shadow-lg mx-auto max-w-full h-auto object-cover border border-gray-100" 
+            />
+        ) : (
+            <div class="relative aspect-video overflow-hidden rounded-xl shadow-lg mx-auto max-w-full h-auto bg-linear-to-br from-primary/20 via-primary/10 to-background flex items-center justify-center border border-gray-100">
+                <Newspaper class="w-16 h-16 text-primary/40" />
+            </div>
+        )}
     </div>
 
     <!-- Content -->

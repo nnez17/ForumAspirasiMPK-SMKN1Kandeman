@@ -499,13 +499,8 @@ async function deleteNews(id: string) {
 
                             {#if kategori === 'berita'}
                                 <div class="space-y-2 md:col-span-2">
-                                    <label for="ringkasan" class="text-sm font-bold text-foreground">Ringkasan Berita</label>
-                                    <textarea id="ringkasan" rows="2" bind:value={form.excerpt} placeholder="Tulis ringkasan pendek..." class="w-full px-5 py-3 rounded-xl bg-muted border border-transparent focus:bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium text-foreground text-sm" required></textarea>
-                                </div>
-
-                                <div class="space-y-2 md:col-span-2">
                                     <div class="flex items-center justify-between mb-1">
-                                        <label for="konten" class="text-sm font-bold text-foreground">Konten Berita (Markdown)</label>
+                                        <label for="konten" class="text-sm font-bold text-foreground">Isi Berita (Markdown)</label>
                                         <div class="flex items-center gap-1 bg-muted p-1 rounded-lg">
                                             <button type="button" onclick={() => applyShortcut('bold')} class="p-1.5 hover:bg-background rounded-md transition-colors" title="Bold (Ctrl+B)"><Bold class="w-3.5 h-3.5" /></button>
                                             <button type="button" onclick={() => applyShortcut('italic')} class="p-1.5 hover:bg-background rounded-md transition-colors" title="Italic (Ctrl+I)"><Italic class="w-3.5 h-3.5" /></button>

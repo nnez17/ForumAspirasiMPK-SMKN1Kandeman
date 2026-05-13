@@ -1,5 +1,5 @@
 ---
-import { Clock } from "@lucide/astro";
+import { Clock, Search } from "@lucide/astro";
 import { app } from "@/api/elysia";
 import type { NewsItem } from "@/data/News";
 import Layout from "@/layouts/Layout.astro";
@@ -13,13 +13,22 @@ const response = await app.handle(
 );
 const result = await response.json();
 const newsData: NewsItem[] = result.success ? result.data : [];
+const searchQuery = Astro.url.searchParams.get("q") || "";
 
-const newsItems = newsData.filter(
+let newsItems = newsData.filter(
 	(item) =>
 		item.category?.toLowerCase() === "berita" ||
 		item.category?.toLowerCase() === "article" ||
 		!item.category,
 );
+
+if (searchQuery) {
+	newsItems = newsItems.filter(
+		(item) =>
+			item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			item.excerpt.toLowerCase().includes(searchQuery.toLowerCase()),
+	);
+}
 ---
 
 <Layout>
@@ -27,13 +36,45 @@ const newsItems = newsData.filter(
     <main class="flex-1 bg-background">
         <BlogHero />
 
+        <!-- Search Bar -->
+        <section class="py-10 border-b border-border/40 bg-muted/30">
+            <div class="container mx-auto px-4">
+                <form action="/blog" method="GET" class="max-w-2xl mx-auto relative group">
+                    <div class="relative">
+                        <Search class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                        <input 
+                            type="text" 
+                            name="q" 
+                            value={searchQuery}
+                            placeholder="Cari berita atau artikel..." 
+                            class="w-full h-14 pl-12 pr-4 rounded-2xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-base shadow-sm"
+                        />
+                        <button 
+                            type="submit"
+                            class="absolute right-2 top-2 h-10 px-6 bg-primary text-white rounded-xl font-bold text-sm hover:bg-primary/90 transition-colors shadow-sm"
+                        >
+                            Cari
+                        </button>
+                    </div>
+                </form>
+                {searchQuery && (
+                    <div class="mt-6 text-center">
+                        <p class="text-muted-foreground">
+                            Menampilkan hasil pencarian untuk: <span class="text-foreground font-bold italic">"{searchQuery}"</span>
+                            <a href="/blog" class="ml-2 text-primary hover:underline font-medium text-sm">Hapus filter</a>
+                        </p>
+                    </div>
+                )}
+            </div>
+        </section>
+
         <!-- News List -->
         <section class="py-16 sm:py-20">
             <div class="container mx-auto px-4">
                 {newsItems.length > 0 ? (
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {newsItems.map((news) => (
-                            <BlogCard news={news} />
+                            <BlogCard news={news} searchQuery={searchQuery} />
                         ))}
                     </div>
                 ) : (
@@ -41,14 +82,52 @@ const newsItems = newsData.filter(
                         <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-muted mb-4">
                             <Clock class="w-8 h-8 text-muted-foreground" />
                         </div>
-                        <h2 class="text-xl font-bold text-foreground mb-2">Belum ada berita</h2>
-                        <p class="text-muted-foreground">Silakan kembali lagi nanti untuk informasi terbaru.</p>
+                        <h2 class="text-xl font-bold text-foreground mb-2">
+                            {searchQuery ? "Hasil tidak ditemukan" : "Belum ada berita"}
+                        </h2>
+                        <p class="text-muted-foreground">
+                            {searchQuery 
+                                ? "Coba gunakan kata kunci lain atau hapus filter pencarian." 
+                                : "Silakan kembali lagi nanti untuk informasi terbaru."}
+                        </p>
                     </div>
                 )}
             </div>
         </section>
     </main>
+    <Footer />
 </Layout>
+
+<script>
+    const searchInput = document.querySelector('input[name="q"]') as HTMLInputElement;
+    const searchForm = searchInput?.closest('form');
+    let debounceTimer: ReturnType<typeof setTimeout>;
+
+    if (searchInput && searchForm) {
+        searchInput.addEventListener('input', () => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                const query = searchInput.value.trim();
+                const url = new URL(window.location.href);
+                if (query) {
+                    url.searchParams.set('q', query);
+                } else {
+                    url.searchParams.delete('q');
+                }
+                // Use history.pushState if you want it to feel even smoother, 
+                // but since it's an Astro SSR page, we need to navigate to update newsItems.
+                // However, the user asked for "searchup automatically", which implies navigation.
+                window.location.href = url.toString();
+            }, 500); // 500ms debounce
+        });
+
+        // Set cursor to the end of input after reload if searching
+        if (searchInput.value) {
+            searchInput.focus();
+            searchInput.setSelectionRange(searchInput.value.length, searchInput.value.length);
+        }
+    }
+</script>
 
 <style>
     main {
