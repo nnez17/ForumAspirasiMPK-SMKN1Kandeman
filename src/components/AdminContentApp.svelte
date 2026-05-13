@@ -174,38 +174,86 @@ function applyShortcut(type: "bold" | "italic" | "link" | "list" | "heading") {
 	const end = textarea.selectionEnd;
 	const text = textarea.value;
 	const selectedText = text.substring(start, end);
+	
 	let replacement = "";
 	let cursorOffset = 0;
 	let selectionLength = selectedText.length;
+	let newStart = start;
+	let newEnd = end;
 
+	const toggleWrapper = (prefix: string, suffix: string) => {
+		// Case 1: Selection is already wrapped: [**text**]
+		if (selectedText.startsWith(prefix) && selectedText.endsWith(suffix)) {
+			replacement = selectedText.slice(prefix.length, -suffix.length);
+			cursorOffset = 0;
+			selectionLength = replacement.length;
+			return true;
+		}
+		// Case 2: Cursor/Selection is inside a wrapper: **[text]**
+		if (text.slice(start - prefix.length, start) === prefix && text.slice(end, end + suffix.length) === suffix) {
+			newStart = start - prefix.length;
+			newEnd = end + suffix.length;
+			replacement = selectedText;
+			cursorOffset = 0;
+			selectionLength = selectedText.length;
+			return true;
+		}
+		return false;
+	};
+
+	let isToggled = false;
 	switch (type) {
 		case "bold":
-			replacement = `**${selectedText}**`;
-			cursorOffset = 2;
+			isToggled = toggleWrapper("**", "**");
+			if (!isToggled) {
+				replacement = `**${selectedText}**`;
+				cursorOffset = 2;
+			}
 			break;
 		case "italic":
-			replacement = `*${selectedText}*`;
-			cursorOffset = 1;
+			isToggled = toggleWrapper("*", "*");
+			if (!isToggled) {
+				replacement = `*${selectedText}*`;
+				cursorOffset = 1;
+			}
 			break;
 		case "link":
-			replacement = `[${selectedText || "Link Text"}](https://)`;
-			cursorOffset = 1;
-			selectionLength = selectedText.length || 9;
+			isToggled = toggleWrapper("[", "](https://)");
+			if (!isToggled) {
+				replacement = `[${selectedText || "Link Text"}](https://)`;
+				cursorOffset = 1;
+				selectionLength = selectedText.length || 9;
+			}
 			break;
 		case "list":
-			replacement = `\n- ${selectedText}`;
-			cursorOffset = 3;
+			if (selectedText.startsWith("- ")) {
+				replacement = selectedText.slice(2);
+				cursorOffset = 0;
+				selectionLength = replacement.length;
+			} else {
+				replacement = `- ${selectedText}`;
+				cursorOffset = 2;
+			}
 			break;
 		case "heading":
-			replacement = `\n## ${selectedText}`;
-			cursorOffset = 4;
+			if (selectedText.startsWith("## ")) {
+				replacement = selectedText.slice(3);
+				cursorOffset = 0;
+				selectionLength = replacement.length;
+			} else {
+				replacement = `## ${selectedText}`;
+				cursorOffset = 3;
+			}
 			break;
 	}
 
+	const newText = text.substring(0, newStart) + replacement + text.substring(newEnd);
+	form.excerpt = newText;
+
 	setTimeout(() => {
 		textarea.focus();
-		const newStart = start + cursorOffset;
-		textarea.setSelectionRange(newStart, newStart + selectionLength);
+		const finalStart = newStart + cursorOffset;
+		textarea.setSelectionRange(finalStart, finalStart + selectionLength);
 	}, 0);
 }
 
@@ -498,7 +546,7 @@ async function deleteNews(id: string) {
                             {#if kategori === 'berita'}
                                 <div class="space-y-2 md:col-span-2">
                                     <div class="flex items-center justify-between mb-1">
-                                        <label for="konten" class="text-sm font-bold text-foreground">Isi Berita (Markdown)</label>
+                                        <label for="konten" class="text-sm font-bold text-foreground">Isi Berita</label>
                                         <div class="flex items-center gap-1 bg-muted p-1 rounded-lg">
                                             <button type="button" onclick={() => applyShortcut('bold')} class="p-1.5 hover:bg-background rounded-md transition-colors" title="Bold (Ctrl+B)"><Bold class="w-3.5 h-3.5" /></button>
                                             <button type="button" onclick={() => applyShortcut('italic')} class="p-1.5 hover:bg-background rounded-md transition-colors" title="Italic (Ctrl+I)"><Italic class="w-3.5 h-3.5" /></button>
@@ -530,12 +578,14 @@ async function deleteNews(id: string) {
                                             rows="12" 
                                             bind:value={form.excerpt} 
                                             onkeydown={handleKeydown}
-                                            placeholder="Tulis konten berita lengkap menggunakan Markdown..." 
+                                            placeholder="Tulis konten berita lengkap..." 
                                             class="w-full px-5 py-4 rounded-xl bg-muted border border-transparent focus:bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium text-foreground leading-relaxed" 
                                             required
                                         ></textarea>
                                     {/if}
-                                    <p class="text-[10px] text-muted-foreground mt-1 font-medium italic">Shortcut: Ctrl+B (Bold), Ctrl+I (Italic), Ctrl+K (Link)</p>
+                                    <p class="text-[10px] text-muted-foreground mt-1 font-medium italic">
+																			<a href="https://www.markdownguide.org/" target="_blank" rel="noopener noreferrer" class="underline">Markdown</a> didukung.
+																		</p>
                                 </div>
 
 									<div class="space-y-2 md:col-span-2">
