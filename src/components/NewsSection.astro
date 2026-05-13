@@ -9,12 +9,20 @@ import {
 } from "@lucide/astro";
 import { app } from "@/api/elysia";
 import type { NewsItem } from "../data/News";
+import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 
 const response = await app.handle(
 	new Request("http://localhost:4321/api/news"),
 );
 const result = await response.json();
-const newsData: NewsItem[] = result.success ? result.data : [];
+const rawNewsData: NewsItem[] = result.success ? result.data : [];
+
+// Process markdown excerpts
+const processor = await createMarkdownProcessor();
+const newsData = await Promise.all(rawNewsData.map(async (item) => {
+	const { code } = await processor.render(item.excerpt || "");
+	return { ...item, excerptHtml: code };
+}));
 
 const newsItems = newsData.filter(
 	(item) =>
@@ -50,7 +58,7 @@ function isNewItem(createdAt: string) {
           <div class="relative aspect-video w-full overflow-hidden">
             {highlightNews.image ? (
               <img 
-                src={highlightNews.image}   5
+                src={highlightNews.image} 
                 alt={highlightNews.title} 
                 class="object-cover w-full h-full" 
               />
@@ -72,9 +80,8 @@ function isNewItem(createdAt: string) {
             <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight cursor-pointer line-clamp-2 hover:text-primary transition-colors">
               {highlightNews.title}
             </h3>
-            <p class="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 line-clamp-3">
-              {highlightNews.excerpt}
-            </p>
+            <div class="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 line-clamp-3 prose-excerpt" set:html={highlightNews.excerptHtml}>
+            </div>
             <a href={`/blog/${highlightNews.id}`} class="mt-auto inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 sm:h-10 px-4 sm:px-6 py-2">
               Baca Selengkapnya
               <ArrowRight class="ml-2 w-4 h-4" />
@@ -171,9 +178,8 @@ function isNewItem(createdAt: string) {
             <h3 class="text-base font-bold text-gray-900 mb-2 line-clamp-2 leading-tight">
               {news.title}
             </h3>
-            <p class="text-xs text-gray-600 line-clamp-3 mb-4">
-              {news.excerpt}
-            </p>
+            <div class="text-xs text-gray-600 line-clamp-3 mb-4 prose-excerpt" set:html={news.excerptHtml}>
+            </div>
             <a href={`/blog/${news.id}`} class="mt-auto flex items-center text-xs font-bold text-primary group/link">
               Baca Selengkapnya 
               <ArrowRight class="ml-1 w-3 h-3 transition-transform group-hover/link:translate-x-1" />
@@ -196,5 +202,22 @@ function isNewItem(createdAt: string) {
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background: #e2e8f0;
     border-radius: 10px;
+  }
+
+  .prose-excerpt :global(p) {
+    margin: 0;
+    display: inline;
+  }
+
+  .prose-excerpt :global(h1),
+  .prose-excerpt :global(h2),
+  .prose-excerpt :global(h3),
+  .prose-excerpt :global(h4),
+  .prose-excerpt :global(h5),
+  .prose-excerpt :global(h6) {
+    font-size: 1em;
+    margin: 0;
+    display: inline;
+    font-weight: bold;
   }
 </style>

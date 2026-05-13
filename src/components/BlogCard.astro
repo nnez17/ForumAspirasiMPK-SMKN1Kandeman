@@ -1,6 +1,7 @@
 ---
 import { ArrowRight, Clock, Newspaper, User } from "@lucide/astro";
 import type { NewsItem } from "@/data/News";
+import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 
 interface Props {
 	news: NewsItem;
@@ -8,6 +9,9 @@ interface Props {
 }
 
 const { news, searchQuery = "" } = Astro.props;
+
+const processor = await createMarkdownProcessor();
+const { code: excerptHtml } = await processor.render(news.excerpt || "");
 
 function highlightText(text: string, query: string) {
 	if (!query) return text;
@@ -58,8 +62,8 @@ function highlightText(text: string, query: string) {
         <h2 class="text-xl font-bold text-foreground mb-3 line-clamp-2 leading-tight">
             <a href={`/blog/${news.id}`} class="hover:text-primary transition-colors" set:html={highlightText(news.title, searchQuery)} />
         </h2>
-        <p class="text-sm text-muted-foreground line-clamp-3 mb-6 flex-1" set:html={highlightText(news.excerpt, searchQuery)}>
-        </p>
+        <div class="text-sm text-muted-foreground line-clamp-3 mb-6 flex-1 prose-excerpt" set:html={searchQuery ? highlightText(news.excerpt, searchQuery) : excerptHtml}>
+        </div>
         <a 
             href={`/blog/${news.id}`} 
             class="inline-flex items-center text-sm font-bold text-primary group/link"
@@ -69,3 +73,22 @@ function highlightText(text: string, query: string) {
         </a>
     </div>
 </article>
+
+<style>
+  .prose-excerpt :global(p) {
+    margin: 0;
+    display: inline;
+  }
+
+  .prose-excerpt :global(h1),
+  .prose-excerpt :global(h2),
+  .prose-excerpt :global(h3),
+  .prose-excerpt :global(h4),
+  .prose-excerpt :global(h5),
+  .prose-excerpt :global(h6) {
+    font-size: 1em;
+    margin: 0;
+    display: inline;
+    font-weight: bold;
+  }
+</style>
