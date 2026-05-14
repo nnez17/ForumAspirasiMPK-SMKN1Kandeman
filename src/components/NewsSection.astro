@@ -12,7 +12,7 @@ import { app } from "@/api/elysia";
 import type { NewsItem } from "../data/News";
 
 const response = await app.handle(
-	new Request("http://localhost:4321/api/news"),
+	new Request("https://mpkskansaka.vercel.app/api/news"),
 );
 const result = await response.json();
 const rawNewsData: NewsItem[] = result.success ? result.data : [];

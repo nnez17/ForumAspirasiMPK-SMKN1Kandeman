@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+import Analytics from "@vercel/analytics/astro";
+import SpeedInsights from "@vercel/speed-insights/astro";
 ---
 <!doctype html>
 <html lang="en">
@@ -10,6 +12,8 @@ import "../styles/global.css";
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="description" content="Forum Aspirasi MPK SMKN 1 Kandeman" />
 		<title>Forum Aspirasi MPK SMKN 1 Kandeman</title>
+		<Analytics />
+		<SpeedInsights />
 	</head>
 	<body>
 		<slot />
