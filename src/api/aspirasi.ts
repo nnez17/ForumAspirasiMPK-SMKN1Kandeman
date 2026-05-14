@@ -46,15 +46,16 @@ export default new Elysia({
 			return {
 				success: true,
 				message: "Data aspirasi berhasil diambil",
-				data: result.data.values?.map((item) => ({
-					email: item[1],
-					name: item[2],
-					class: item[3],
-					status: item[4],
-					content: item[5],
-					proof: item[6],
-					timestamp: item[0],
-				})) ?? [],
+				data:
+					result.data.values?.map((item) => ({
+						email: item[1],
+						name: item[2],
+						class: item[3],
+						status: item[4],
+						content: item[5],
+						proof: item[6],
+						timestamp: item[0],
+					})) ?? [],
 			};
 		},
 		{

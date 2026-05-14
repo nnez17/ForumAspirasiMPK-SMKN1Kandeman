@@ -303,7 +303,7 @@ async function handlePublish(e: Event) {
 			const fileExtension = selectedFile.name.split(".").pop();
 			const uuid = crypto.randomUUID();
 			const fileName = `${uuid}.${fileExtension}`;
-			
+
 			await upload(`images/${fileName}`, selectedFile, {
 				access: "public",
 				handleUploadUrl: "/api/misc/upload",
@@ -404,9 +404,9 @@ async function deleteNews(id: string) {
 
 		if (data?.success) {
 			if (newsItem?.image) {
-				const imagePath = newsItem.image.startsWith("/api/misc/images/") 
+				const imagePath = newsItem.image.startsWith("/api/misc/images/")
 					? newsItem.image.replace("/api/misc/images/", "")
-					: newsItem.image.startsWith("/i/") 
+					: newsItem.image.startsWith("/i/")
 						? newsItem.image.replace("/i/", "")
 						: newsItem.image;
 

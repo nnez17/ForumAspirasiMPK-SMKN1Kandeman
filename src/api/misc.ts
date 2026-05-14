@@ -46,7 +46,7 @@ export default new Elysia({
 						"image/png",
 						"image/gif",
 						"image/webp",
-						"image/heic"
+						"image/heic",
 					],
 					tokenPayload: JSON.stringify({}),
 				};
