@@ -60,7 +60,7 @@ function isNewItem(createdAt: string) {
           <div class="relative aspect-video w-full overflow-hidden">
             {highlightNews.image ? (
               <img 
-                src={highlightNews.image} 
+                src={highlightNews.image.startsWith("http") || highlightNews.image.startsWith("/") ? highlightNews.image : `/i/${highlightNews.image}`} 
                 alt={highlightNews.title} 
                 class="object-cover w-full h-full" 
               />
@@ -160,7 +160,7 @@ function isNewItem(createdAt: string) {
           <div class="relative aspect-4/3 overflow-hidden">
             {news.image ? (
               <img 
-                src={news.image} 
+                src={news.image.startsWith("http") || news.image.startsWith("/") ? news.image : `/i/${news.image}`} 
                 alt={news.title} 
                 class="object-cover w-full h-full" 
               />

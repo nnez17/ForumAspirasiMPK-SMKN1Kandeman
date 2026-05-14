@@ -40,7 +40,7 @@ function highlightText(text: string, query: string) {
     <div class="relative aspect-video overflow-hidden">
         {news.image ? (
             <img 
-                src={news.image} 
+                src={news.image.startsWith("http") || news.image.startsWith("/") ? news.image : `/i/${news.image}`} 
                 alt={news.title} 
                 class="object-cover w-full h-full" 
             />

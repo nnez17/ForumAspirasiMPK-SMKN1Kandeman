@@ -41,7 +41,7 @@ const { code: contentHtml } = await processor.render(news.excerpt);
     <div class="mb-12">
         {news.image ? (
             <img 
-                src={news.image} 
+                src={news.image.startsWith("http") || news.image.startsWith("/") ? news.image : `/i/${news.image}`} 
                 alt={news.title} 
                 class="relative aspect-video overflow-hidden rounded-xl shadow-lg mx-auto max-w-full h-auto object-cover border border-gray-100" 
             />

@@ -53,6 +53,12 @@ function addToast(
 	}, 5000);
 }
 
+function getImageUrl(image: string) {
+	if (!image) return "";
+	if (image.startsWith("http") || image.startsWith("/")) return image;
+	return `/i/${image}`;
+}
+
 // UI State
 let activeSection = $state("publish-content");
 let isLoadingData = $state(false);
@@ -277,13 +283,15 @@ async function handlePublish(e: Event) {
 
 		if (selectedFile) {
 			const fileExtension = selectedFile.name.split(".").pop();
-			const fileName = `images/${crypto.randomUUID()}.${fileExtension}`;
-			await upload(fileName, selectedFile, {
+			const uuid = crypto.randomUUID();
+			const fileName = `${uuid}.${fileExtension}`;
+
+			await upload(`images/${fileName}`, selectedFile, {
 				access: "public",
 				handleUploadUrl: "/api/misc/upload",
 				headers: { "x-api-key": apiKey },
 			});
-			payload.image = `/api/misc/${fileName}`;
+			payload.image = fileName;
 		}
 
 		if (editingId) {
@@ -347,7 +355,7 @@ function handleEditNews(news: any) {
 		news.category?.toLowerCase() === "article"
 			? "berita"
 			: "info";
-	imagePreview = news.image || "";
+	imagePreview = getImageUrl(news.image);
 
 	activeSection = "publish-content";
 	setTimeout(() => {
@@ -383,8 +391,13 @@ async function deleteNews(id: string) {
 		});
 
 		if (data?.success) {
-			if (newsItem?.image?.startsWith("/api/misc/images/")) {
-				const imagePath = newsItem.image.replace("/api/misc/images/", "");
+			if (newsItem?.image) {
+				const imagePath = newsItem.image.startsWith("/api/misc/images/")
+					? newsItem.image.replace("/api/misc/images/", "")
+					: newsItem.image.startsWith("/i/")
+						? newsItem.image.replace("/i/", "")
+						: newsItem.image;
+
 				// @ts-expect-error this work perfectly fine, idk why eden keeps complaining
 				await api.misc.images({ "*": imagePath }).delete(null, {
 					headers: { "x-api-key": apiKey },

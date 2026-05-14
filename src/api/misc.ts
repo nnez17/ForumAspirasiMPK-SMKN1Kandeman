@@ -34,21 +34,6 @@ export default new Elysia({
 			}),
 		},
 	)
-	.get("/images/*", ({ params, set, redirect }) => {
-		const path = params["*"];
-		const baseUrl = import.meta.env.BLOB_BASE_URL;
-
-		if (!baseUrl) {
-			set.status = 500;
-			return {
-				success: false,
-				message: "BLOB_BASE_URL is not configured",
-			};
-		}
-
-		return redirect(`${baseUrl}/images/${path}`);
-	})
-
 	.use(admin)
 	.post("/upload", async ({ body, request }) => {
 		return await handleUpload({
@@ -61,6 +46,7 @@ export default new Elysia({
 						"image/png",
 						"image/gif",
 						"image/webp",
+						"image/heic",
 					],
 					tokenPayload: JSON.stringify({}),
 				};
