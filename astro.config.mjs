@@ -9,14 +9,16 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
 	output: "server",
 	integrations: [svelte()],
-	adapter: vercel({
-		includeFiles: ["./node_modules/undici/**/*"],
-	}),
+	adapter: vercel(),
 	vite: {
 		plugins: [tailwindcss()],
 		ssr: {
 			noExternal: ["@vercel/blob", "elysia"],
-			external: ["undici"],
+		},
+		resolve: {
+			alias: {
+				undici: "/src/lib/undici-shim.js",
+			},
 		},
 	},
 });
