@@ -9,7 +9,7 @@ import Layout from "@/layouts/Layout.astro";
 import BlogHeader from "@/components/BlogHeader.astro";
 
 const response = await app.handle(
-	new Request("http://localhost:4321/api/news"),
+	new Request("https://mpkskansaka.vercel.app/api/news"),
 );
 const result = await response.json();
 const newsData: NewsItem[] = result.success ? result.data : [];
