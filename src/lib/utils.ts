@@ -15,3 +15,11 @@ export type WithoutChildrenOrChild<T> = WithoutChildren<WithoutChild<T>>;
 export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
 	ref?: U | null;
 };
+
+export function getImageUrl(path: string | undefined | null) {
+	if (!path) return "";
+	if (path.startsWith("http") || path.startsWith("/") || path.startsWith("data:")) {
+		return path;
+	}
+	return `/api/upload/${path}`;
+}

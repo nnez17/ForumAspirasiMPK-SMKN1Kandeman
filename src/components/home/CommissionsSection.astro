@@ -1,5 +1,18 @@
 ---
-import { commissions } from "@/data/Commission";
+import {
+	commissions as staticCommissions,
+	type Person,
+} from "@/data/Commission";
+import { api } from "@/lib/eden";
+import { getImageUrl } from "@/lib/utils";
+
+const { data: structureResponse } = await api.structure.get();
+const structureData = structureResponse?.success
+	? structureResponse.data
+	: null;
+
+const commissions =
+	(structureData?.commissions as Person[]) || staticCommissions;
 ---
 
 <section class="w-full bg-black overflow-hidden" id="komisi">
@@ -22,11 +35,11 @@ import { commissions } from "@/data/Commission";
 
   <!-- Full Image Grid -->
   <div class="grid grid-cols-1 md:grid-cols-2">
-    {commissions.map((komisi) => (
+    {commissions.map((komisi: Person) => (
       <div class="relative aspect-3/4 group overflow-hidden bg-gray-900">
         {/* Main Images */}
         <img 
-          src={komisi.image} 
+          src={getImageUrl(komisi.image)} 
           alt={komisi.subtitle} 
           class="komisi-img absolute inset-0 w-full h-full border-l-2 border-r-2 border-b-2 border-black/10 object-cover group-hover:scale-105 transition-transform duration-300 scale-[1.02] no-drag"
         />
@@ -65,7 +78,7 @@ import { commissions } from "@/data/Commission";
                 <div>
                   <span class="text-[9px] sm:text-[10px] text-white/40 font-black uppercase tracking-[0.3em] block mb-2 sm:mb-3 md:mb-4">Anggota Komisi</span>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 sm:gap-x-6 gap-y-1.5 sm:gap-y-2">
-                    {komisi.members.map((member) => (
+                    {komisi.members.map((member: string) => (
                       <div class="flex items-center gap-2 sm:gap-3">
                         <div class="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-primary/60"></div>
                         <span class="text-xs sm:text-sm text-white/70 font-medium">{member}</span>

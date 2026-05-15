@@ -1,6 +1,6 @@
 const color = "from-blue-600/40";
 
-interface Person {
+export interface Person {
 	id: string;
 	title: string;
 	subtitle: string;

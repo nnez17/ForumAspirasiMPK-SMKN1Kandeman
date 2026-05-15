@@ -1,10 +1,16 @@
-interface Person {
+export interface Person {
 	role: string;
 	name: string;
 	class: string;
 	description: string;
 	image: string;
 	color: string;
+}
+
+export interface BPH {
+	leader: Person;
+	assistants: Person[];
+	administration: Person[];
 }
 
 const overlayColor = "from-blue-500 to-indigo-600";
