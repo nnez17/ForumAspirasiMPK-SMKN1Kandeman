@@ -136,7 +136,8 @@ const adminLinks = [
             isActive = true;
           }
         } else {
-          isActive = currentPath === href || currentPath === href + '/';
+          const path = '/' + currentPath.split('/')[1];
+          isActive = path === href || path + '/' === href;
         }
 
         if (isActive) {
@@ -178,7 +179,7 @@ const adminLinks = [
       const currentPath = window.location.pathname;
       const isLandingPage = currentPath === '/' || currentPath === '/index.html';
 
-      if (currentPath === '/admin' || currentPath === '/admin/') {
+      if (currentPath.startsWith('/admin')) {
         setActiveLink('/admin');
       } else if (currentPath.startsWith('/blog')) {
         setActiveLink('#berita');
@@ -192,7 +193,9 @@ const adminLinks = [
     handleInitialState();
 
     window.addEventListener('scroll', () => {
-      if (window.scrollY < 50) {
+      const currentPath = window.location.pathname;
+      const isLandingPage = currentPath === '/' || currentPath === '/index.html';
+      if (window.scrollY < 50 && isLandingPage) {
         setActiveLink('#home');
       }
     }, { passive: true });
