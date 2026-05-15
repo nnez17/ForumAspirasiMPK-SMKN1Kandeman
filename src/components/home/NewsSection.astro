@@ -9,7 +9,7 @@ import {
 	User,
 } from "@lucide/astro";
 import { app } from "@/api/elysia";
-import type { NewsItem } from "../data/News";
+import type { NewsItem } from "@/data/News";
 
 const response = await app.handle(
 	new Request("https://mpkskansaka.vercel.app/api/news"),
