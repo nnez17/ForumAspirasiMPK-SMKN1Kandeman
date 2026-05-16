@@ -21,6 +21,7 @@ import * as AlertDialog from "@/components/ui/alert-dialog/index.js";
 import { api } from "@/lib/eden";
 import { adminState, addToast } from "@/lib/adminState.svelte";
 import AdminLayout from "./AdminLayout.svelte";
+import { getOptimizedImageUrl } from "@/lib/utils";
 
 let newsList: any[] = $state([]);
 let isLoadingData = $state(false);
@@ -44,12 +45,6 @@ let form = $state({
 let imagePreview = $state("");
 let selectedFile = $state<File | null>(null);
 let isPreviewMode = $state(false);
-
-function getImageUrl(image: string) {
-	if (!image) return "";
-	if (image.startsWith("http") || image.startsWith("/")) return image;
-	return `/i/${image}`;
-}
 
 onMount(() => {
 	if (adminState.apiKey) fetchData();
@@ -219,7 +214,7 @@ function handleEditNews(news: any) {
 		news.category?.toLowerCase() === "article"
 			? "berita"
 			: "info";
-	imagePreview = getImageUrl(news.image);
+	imagePreview = getOptimizedImageUrl(news.image, 400, 300);
 	isDialogOpen = true;
 }
 
@@ -300,8 +295,8 @@ async function deleteNews() {
 					: newsItem.image.startsWith("/i/")
 						? newsItem.image.replace("/i/", "")
 						: newsItem.image;
-				// @ts-expect-error this work perfectly fine
 				await api.misc
+					// @ts-expect-error this work perfectly fine
 					.images({ "*": imagePath })
 					.delete(null, { headers: { "x-api-key": adminState.apiKey } });
 			}

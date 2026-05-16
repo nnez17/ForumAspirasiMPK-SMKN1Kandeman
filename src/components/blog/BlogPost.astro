@@ -1,6 +1,7 @@
 ---
 import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 import { ChevronLeft, Clock, Newspaper, User } from "@lucide/astro";
+import { Image } from "astro:assets";
 import type { NewsItem } from "@/data/News";
 
 interface Props {
@@ -40,9 +41,12 @@ const { code: contentHtml } = await processor.render(news.excerpt);
     <!-- Featured Image -->
     <div class="mb-12">
         {news.image ? (
-            <img 
-                src={news.image.startsWith("http") || news.image.startsWith("/") ? news.image : `/i/${news.image}`} 
+            <Image 
+                src={new URL(news.image.startsWith("http") || news.image.startsWith("/") ? news.image : `/i/${news.image}`, Astro.url).toString()} 
                 alt={news.title} 
+                width={1200}
+                height={675}
+                format="webp"
                 class="relative aspect-video overflow-hidden rounded-xl shadow-lg mx-auto max-w-full h-auto object-cover border border-gray-100" 
             />
         ) : (

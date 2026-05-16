@@ -1,6 +1,7 @@
 ---
 import { SendHorizontal } from "@lucide/astro";
 import { Button } from "@/components/ui/button";
+import { Image } from "astro:assets";
 ---
 <section class="relative w-full overflow-hidden" id="home">
   <!-- Decorative Top  -->
@@ -20,14 +21,14 @@ import { Button } from "@/components/ui/button";
       <!-- MPK Logo -->
       <div class="relative group">
         <div class="w-14 h-20 sm:w-16 sm:h-24 md:w-20 md:h-28 lg:w-24 lg:h-36 xl:w-28 xl:h-40 bg-white flex flex-col items-center justify-center p-2 sm:p-3 md:p-4 relative shadow-2xl" style="clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);">
-          <img src="/images/logo-mpk.webp" alt="Logo MPK" class="w-full h-auto object-contain no-drag" />
+          <Image src={new URL("/images/logo-mpk.webp", Astro.url).toString()} alt="Logo MPK" width={112} height={160} format="webp" class="w-full h-auto object-contain no-drag" />
         </div>
       </div>
       
       <!-- SMK Logo -->
       <div class="relative group">
         <div class="w-14 h-20 sm:w-16 sm:h-24 md:w-20 md:h-28 lg:w-24 lg:h-36 xl:w-28 xl:h-40 bg-white flex flex-col items-center justify-center p-2 sm:p-3 md:p-4 relative shadow-2xl" style="clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);">
-          <img src="/images/logo-smk.webp" alt="Logo SMK" class="w-full h-auto object-contain no-drag" />
+          <Image src={new URL("/images/logo-smk.webp", Astro.url).toString()} alt="Logo SMK" width={112} height={160} format="webp" class="w-full h-auto object-contain no-drag" />
         </div>
       </div>
     </div>

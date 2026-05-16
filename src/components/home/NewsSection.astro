@@ -9,6 +9,7 @@ import {
 	User,
 } from "@lucide/astro";
 import { app } from "@/api/elysia";
+import { Image } from "astro:assets";
 import type { NewsItem } from "@/data/News";
 
 const response = await app.handle(
@@ -59,9 +60,12 @@ function isNewItem(createdAt: string) {
         <div class="rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-200 bg-white shadow-sm h-full flex flex-col">
           <div class="relative aspect-video w-full overflow-hidden">
             {highlightNews.image ? (
-              <img 
-                src={highlightNews.image.startsWith("http") || highlightNews.image.startsWith("/") ? highlightNews.image : `/i/${highlightNews.image}`} 
+              <Image 
+                src={new URL(highlightNews.image.startsWith("http") || highlightNews.image.startsWith("/") ? highlightNews.image : `/i/${highlightNews.image}`, Astro.url).toString()} 
                 alt={highlightNews.title} 
+                width={800}
+                height={450}
+                format="webp"
                 class="object-cover w-full h-full" 
               />
             ) : (
@@ -159,9 +163,12 @@ function isNewItem(createdAt: string) {
         <div class="group flex flex-col bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
           <div class="relative aspect-4/3 overflow-hidden">
             {news.image ? (
-              <img 
-                src={news.image.startsWith("http") || news.image.startsWith("/") ? news.image : `/i/${news.image}`} 
+              <Image 
+                src={new URL(news.image.startsWith("http") || news.image.startsWith("/") ? news.image : `/i/${news.image}`, Astro.url).toString()} 
                 alt={news.title} 
+                width={400}
+                height={300}
+                format="webp"
                 class="object-cover w-full h-full" 
               />
             ) : (

@@ -9,6 +9,7 @@ import { upload } from "@vercel/blob/client";
 import { api } from "@/lib/eden";
 import { adminState, addToast } from "@/lib/adminState.svelte";
 import AdminLayout from "./AdminLayout.svelte";
+import { getOptimizedImageUrl } from "@/lib/utils";
 import { commissions as staticCommissions } from "@/data/Commission";
 import {
 	leader as staticLeader,
@@ -31,13 +32,6 @@ let structureData = $state({
 
 let pendingUploads = new Map<string, File>();
 let imagesToDelete = new Set<string>();
-
-function getImageUrl(image: string) {
-	if (!image) return "";
-	if (image.startsWith("blob:")) return image;
-	if (image.startsWith("http") || image.startsWith("/")) return image;
-	return `/i/${image}`;
-}
 
 onMount(() => {
 	if (adminState.apiKey) fetchData();
@@ -247,7 +241,7 @@ function autoHeight(node: HTMLTextAreaElement, value: string) {
         <div class="flex flex-col md:flex-row gap-6 py-6 relative">
           <div class="relative group w-32 h-44 shrink-0 rounded-2xl overflow-hidden bg-muted border border-border flex items-center justify-center self-center md:self-start mx-auto md:mx-0 shadow-sm">
             {#if structureData.executive.leader.image}
-              <img src={getImageUrl(structureData.executive.leader.image)} alt="Leader" class="w-full h-full object-cover" />
+              <img src={getOptimizedImageUrl(structureData.executive.leader.image, 256, 352)} alt="Leader" class="w-full h-full object-cover" />
             {:else}
               <Users class="w-8 h-8 text-muted-foreground/30" />
             {/if}
@@ -289,7 +283,7 @@ function autoHeight(node: HTMLTextAreaElement, value: string) {
               <div class="py-8 flex flex-col md:flex-row gap-6 relative group/item">
                 <div class="relative group w-32 h-44 shrink-0 rounded-2xl overflow-hidden bg-muted border border-border flex items-center justify-center self-center md:self-start mx-auto md:mx-0 shadow-sm">
                   {#if assistant.image}
-                    <img src={getImageUrl(assistant.image)} alt={assistant.role} class="w-full h-full object-cover" />
+                    <img src={getOptimizedImageUrl(assistant.image, 256, 352)} alt={assistant.role} class="w-full h-full object-cover" />
                   {:else}
                     <Users class="w-8 h-8 text-muted-foreground/30" />
                   {/if}
@@ -341,7 +335,7 @@ function autoHeight(node: HTMLTextAreaElement, value: string) {
               <div class="py-8 flex flex-col md:flex-row gap-6 relative group/item">
                 <div class="relative group w-28 h-36 shrink-0 rounded-2xl overflow-hidden bg-muted border border-border flex items-center justify-center self-center md:self-start mx-auto md:mx-0 shadow-sm">
                   {#if admin.image}
-                    <img src={getImageUrl(admin.image)} alt={admin.role} class="w-full h-full object-cover" />
+                    <img src={getOptimizedImageUrl(admin.image, 224, 288)} alt={admin.role} class="w-full h-full object-cover" />
                   {:else}
                     <Users class="w-8 h-8 text-muted-foreground/30" />
                   {/if}
@@ -400,7 +394,7 @@ function autoHeight(node: HTMLTextAreaElement, value: string) {
                 <div class="md:col-span-4 space-y-6">
                   <div class="relative group aspect-square max-w-[140px] mx-auto md:mx-0 rounded-3xl overflow-hidden bg-muted border border-border flex items-center justify-center shadow-inner">
                     {#if commission.image}
-                      <img src={getImageUrl(commission.image)} alt={commission.title} class="w-full h-full object-cover" />
+                      <img src={getOptimizedImageUrl(commission.image, 280, 280)} alt={commission.title} class="w-full h-full object-cover" />
                     {:else}
                       <Users class="w-10 h-10 text-muted-foreground/30" />
                     {/if}

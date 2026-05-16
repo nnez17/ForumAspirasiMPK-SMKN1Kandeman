@@ -1,6 +1,7 @@
 ---
 import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 import { ArrowRight, Clock, Newspaper, User } from "@lucide/astro";
+import { Image } from "astro:assets";
 import type { NewsItem } from "@/data/News";
 
 interface Props {
@@ -39,9 +40,12 @@ function highlightText(text: string, query: string) {
 <article class="group flex flex-col bg-card rounded-2xl border border-border shadow-sm overflow-hidden">
     <div class="relative aspect-video overflow-hidden">
         {news.image ? (
-            <img 
-                src={news.image.startsWith("http") || news.image.startsWith("/") ? news.image : `/i/${news.image}`} 
+            <Image 
+                src={new URL(news.image.startsWith("http") || news.image.startsWith("/") ? news.image : `/i/${news.image}`, Astro.url).toString()} 
                 alt={news.title} 
+                width={600}
+                height={338}
+                format="webp"
                 class="object-cover w-full h-full" 
             />
         ) : (

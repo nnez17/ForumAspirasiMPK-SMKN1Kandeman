@@ -6,6 +6,7 @@ import {
 	leader as staticLeader,
 	type Person,
 } from "@/data/Executive";
+import { Image } from "astro:assets";
 import { api } from "@/lib/eden";
 import { getImageUrl } from "@/lib/utils";
 
@@ -46,9 +47,12 @@ const administration = structureData?.executive?.administration || staticAdmin;
         <div class="relative group w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
           <div class="exec-card relative aspect-3/4 rounded-[24px] sm:rounded-[32px] md:rounded-[40px] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-2xl transition-all duration-500 group-hover:border-amber-500/30">
             {/* Main Images */}
-            <img 
-              src={getImageUrl(leader.image)} 
+            <Image 
+              src={new URL(getImageUrl(leader.image), Astro.url).toString()} 
               alt={leader.name} 
+              width={600}
+              height={800}
+              format="webp"
               class="exec-img absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 scale-[1.02] no-drag"
             />
             
@@ -89,9 +93,12 @@ const administration = structureData?.executive?.administration || staticAdmin;
               
               <div class="relative group w-full max-w-md sm:max-w-lg md:max-w-none mx-auto">
                 <div class="exec-card relative aspect-3/4 rounded-[20px] sm:rounded-[24px] md:rounded-[32px] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-xl transition-all duration-500 group-hover:border-white/20">
-                  <img 
-                    src={getImageUrl(member.image)} 
+                  <Image 
+                    src={new URL(getImageUrl(member.image), Astro.url).toString()} 
                     alt={member.name} 
+                    width={600}
+                    height={800}
+                    format="webp"
                     class="exec-img absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 scale-[1.02] no-drag"
                   />
                   
@@ -137,9 +144,12 @@ const administration = structureData?.executive?.administration || staticAdmin;
               
               <div class="relative group w-full max-w-sm sm:max-w-none mx-auto">
                 <div class="exec-card relative aspect-3/4 rounded-[16px] sm:rounded-[20px] md:rounded-[24px] overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-lg transition-all duration-500 group-hover:border-white/20">
-                  <img 
-                    src={getImageUrl(member.image)} 
+                  <Image 
+                    src={new URL(getImageUrl(member.image), Astro.url).toString()} 
                     alt={member.name} 
+                    width={600}
+                    height={800}
+                    format="webp"
                     class="exec-img absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 scale-[1.02] no-drag"
                   />
                   

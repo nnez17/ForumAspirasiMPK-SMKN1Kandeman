@@ -1,5 +1,6 @@
 ---
 import { Globe, Mail } from "@lucide/astro";
+import { Image } from "astro:assets";
 ---
 
 <footer class="bg-[#0f172a] text-gray-300 py-10 sm:py-12 md:py-16 border-t border-gray-800" id="kontak">
@@ -45,7 +46,7 @@ import { Globe, Mail } from "@lucide/astro";
         </ul>
         <div class="flex items-center gap-4">
           <a href="https://www.instagram.com/mpk.skansaka/" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-800 flex items-center justify-center transition-all">
-            <img src="/images/instagram.webp" alt="Instagram" class="w-7 h-7 sm:w-8 sm:h-8 no-drag" />
+            <Image src={new URL("/images/instagram.webp", Astro.url).toString()} alt="Instagram" class="w-7 h-7 sm:w-8 sm:h-8 no-drag" width={32} height={32} format="webp" />
           </a>
         </div>
       </div>

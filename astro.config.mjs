@@ -11,6 +11,9 @@ export default defineConfig({
 	output: "server",
 	integrations: [svelte()],
 	adapter: vercel(),
+	image: {
+		remotePatterns: [{ protocol: "https" }, { protocol: "http" }],
+	},
 	vite: {
 		plugins: [tailwindcss()],
 		ssr: {

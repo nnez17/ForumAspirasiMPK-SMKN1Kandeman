@@ -21,9 +21,40 @@ export function getImageUrl(path: string | undefined | null) {
 	if (
 		path.startsWith("http") ||
 		path.startsWith("/") ||
-		path.startsWith("data:")
+		path.startsWith("data:") ||
+		path.startsWith("blob:")
 	) {
 		return path;
 	}
 	return `/i/${path}`;
+}
+
+export function getOptimizedImageUrl(
+	path: string | undefined | null,
+	width = 600,
+	height = 800,
+	format = "webp",
+) {
+	const rawUrl = getImageUrl(path);
+	if (!rawUrl || rawUrl.startsWith("data:") || rawUrl.startsWith("blob:"))
+		return rawUrl;
+
+	// Determine base URL depending on whether we are in browser or SSR
+	const baseUrl =
+		typeof window !== "undefined"
+			? window.location.origin
+			: "http://localhost:4321";
+	const absoluteUrl = rawUrl.startsWith("http")
+		? rawUrl
+		: `${baseUrl}${rawUrl}`;
+
+	// Construct Astro's /_image endpoint URL
+	const params = new URLSearchParams({
+		href: absoluteUrl,
+		w: width.toString(),
+		h: height.toString(),
+		f: format,
+	});
+
+	return `/_image?${params.toString()}`;
 }

@@ -3,6 +3,7 @@ import {
 	commissions as staticCommissions,
 	type Person,
 } from "@/data/Commission";
+import { Image } from "astro:assets";
 import { api } from "@/lib/eden";
 import { getImageUrl } from "@/lib/utils";
 
@@ -38,9 +39,12 @@ const commissions =
     {commissions.map((komisi: Person) => (
       <div class="relative aspect-3/4 group overflow-hidden bg-gray-900">
         {/* Main Images */}
-        <img 
-          src={getImageUrl(komisi.image)} 
+        <Image 
+          src={new URL(getImageUrl(komisi.image), Astro.url).toString()} 
           alt={komisi.subtitle} 
+          width={600}
+          height={800}
+          format="webp"
           class="komisi-img absolute inset-0 w-full h-full border-l-2 border-r-2 border-b-2 border-black/10 object-cover group-hover:scale-105 transition-transform duration-300 scale-[1.02] no-drag"
         />
         
