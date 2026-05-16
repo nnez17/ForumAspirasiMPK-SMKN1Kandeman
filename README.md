@@ -50,7 +50,7 @@ The project follows a standard Astro and Svelte organization:
 ├── biome.json           # Linting and formatting configuration
 ├── package.json         # Dependencies and project scripts
 └── tsconfig.json        # TypeScript compiler configuration
-```s
+```
 
 ## License
 
