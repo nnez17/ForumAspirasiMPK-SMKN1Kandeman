@@ -5,6 +5,7 @@ import Newspaper from "@lucide/svelte/icons/newspaper";
 import MessageSquare from "@lucide/svelte/icons/message-square";
 import { api } from "@/lib/eden/client";
 import { adminState } from "@/lib/adminState.svelte";
+import { Skeleton } from "@/components/ui/skeleton/index.js";
 import AdminLayout from "./AdminLayout.svelte";
 
 let isLoadingData = $state(false);
@@ -55,40 +56,46 @@ async function fetchData() {
       <p class="text-muted-foreground">Statistik Konten & Aspirasi</p>
     </div>
 
-    {#if isLoadingData}
-      <div class="flex items-center justify-center py-20">
-        <Loader2 class="w-8 h-8 animate-spin text-muted-foreground" />
-      </div>
-    {:else}
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- News Card -->
-        <a href="/admin/blog" class="block p-8 rounded-2xl bg-muted/30 border border-border">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- News Card -->
+      <a href="/admin/blog" class="block p-8 rounded-2xl bg-muted/30 border border-border">
+      <div class="flex items-center gap-4 mb-6">
+        <div class="p-2.5 bg-background rounded-lg border border-border text-primary">
+          <Newspaper class="w-5 h-5" />
+        </div>
+        <span class="text-xs font-bold uppercase tracking-widest text-muted-foreground">Blog & Berita</span>
+        </div>
+        <div>
+          <div class="text-5xl font-black text-foreground tracking-tighter mb-1">
+            {#if isLoadingData}
+              <Skeleton class="h-12 w-16" />
+            {:else}
+              {newsCount}
+            {/if}
+          </div>
+          <p class="text-sm font-medium text-muted-foreground">Total artikel dipublikasikan</p>
+        </div>
+      </a>
+
+      <!-- Aspirasi Card -->
+      <a href="/admin/aspirasi" class="block p-8 rounded-2xl bg-muted/30 border border-border">
         <div class="flex items-center gap-4 mb-6">
           <div class="p-2.5 bg-background rounded-lg border border-border text-primary">
-            <Newspaper class="w-5 h-5" />
+            <MessageSquare class="w-5 h-5" />
           </div>
-          <span class="text-xs font-bold uppercase tracking-widest text-muted-foreground">Blog & Berita</span>
+          <span class="text-xs font-bold uppercase tracking-widest text-muted-foreground">Aspirasi Siswa</span>
+        </div>
+        <div>
+          <div class="text-5xl font-black text-foreground tracking-tighter mb-1">
+            {#if isLoadingData}
+              <Skeleton class="h-12 w-16" />
+            {:else}
+              {aspirationsCount}
+            {/if}
           </div>
-          <div>
-            <div class="text-5xl font-black text-foreground tracking-tighter mb-1">{newsCount}</div>
-            <p class="text-sm font-medium text-muted-foreground">Total artikel dipublikasikan</p>
-          </div>
-        </a>
-
-        <!-- Aspirasi Card -->
-        <a href="/admin/aspirasi" class="block p-8 rounded-2xl bg-muted/30 border border-border">
-          <div class="flex items-center gap-4 mb-6">
-            <div class="p-2.5 bg-background rounded-lg border border-border text-primary">
-              <MessageSquare class="w-5 h-5" />
-            </div>
-            <span class="text-xs font-bold uppercase tracking-widest text-muted-foreground">Aspirasi Siswa</span>
-          </div>
-          <div>
-            <div class="text-5xl font-black text-foreground tracking-tighter mb-1">{aspirationsCount}</div>
-            <p class="text-sm font-medium text-muted-foreground">Total pesan aspirasi masuk</p>
-          </div>
-        </a>
-      </div>
-    {/if}
+          <p class="text-sm font-medium text-muted-foreground">Total pesan aspirasi masuk</p>
+        </div>
+      </a>
+    </div>
   </div>
 </AdminLayout>

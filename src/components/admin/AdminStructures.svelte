@@ -8,6 +8,7 @@ import Save from "@lucide/svelte/icons/save";
 import { upload } from "@vercel/blob/client";
 import { api } from "@/lib/eden/client";
 import { adminState, addToast } from "@/lib/adminState.svelte";
+import { Skeleton } from "@/components/ui/skeleton/index.js";
 import AdminLayout from "./AdminLayout.svelte";
 import { getOptimizedImageUrl } from "@/lib/utils";
 
@@ -17,9 +18,27 @@ let fetched = false;
 
 let structureData = $state({
 	executive: {
-		leader: { role: "KETUA UMUM", name: "", class: "", description: "", image: "" },
-		assistants: [] as { role: string; name: string; class: string; description: string; image: string }[],
-		administration: [] as { role: string; name: string; class: string; description: string; image: string }[],
+		leader: {
+			role: "KETUA UMUM",
+			name: "",
+			class: "",
+			description: "",
+			image: "",
+		},
+		assistants: [] as {
+			role: string;
+			name: string;
+			class: string;
+			description: string;
+			image: string;
+		}[],
+		administration: [] as {
+			role: string;
+			name: string;
+			class: string;
+			description: string;
+			image: string;
+		}[],
 	},
 	commissions: [] as {
 		id: string;
@@ -244,12 +263,31 @@ function autoHeight(node: HTMLTextAreaElement, value: string) {
     <p class="text-muted-foreground mt-1">Kelola data pengurus MPK dan anggota komisi.</p>
   </div>
 
-  {#if isLoadingData}
-    <div class="flex items-center justify-center py-20">
-      <Loader2 class="w-10 h-10 animate-spin text-primary" />
-    </div>
-  {:else}
-    <div class="space-y-12 max-w-4xl">
+  <div class="space-y-12 max-w-4xl">
+    {#if isLoadingData}
+      <div class="space-y-12">
+        <div class="space-y-6">
+          <Skeleton class="h-8 w-48 mb-4" />
+          <div class="flex flex-col md:flex-row gap-6 py-6">
+            <Skeleton class="w-32 h-44 shrink-0 rounded-2xl" />
+            <div class="flex-1 space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <Skeleton class="h-10 sm:col-span-2 rounded-xl" />
+                <Skeleton class="h-10 rounded-xl" />
+              </div>
+              <Skeleton class="h-20 rounded-xl" />
+            </div>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <Skeleton class="h-8 w-48 mb-4" />
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Skeleton class="h-40 rounded-2xl" />
+            <Skeleton class="h-40 rounded-2xl" />
+          </div>
+        </div>
+      </div>
+    {:else}
       <!-- BPH Section -->
       <div class="space-y-6">
         <div class="flex items-center gap-3 border-b border-border pb-2">
@@ -473,12 +511,12 @@ function autoHeight(node: HTMLTextAreaElement, value: string) {
           {/each}
         </div>
       </div>
-    </div>
+    {/if}
+  </div>
 
     <div class="mt-16 pt-8 border-t border-border flex justify-center sm:justify-end pb-10">
       <button onclick={handleUpdateStructure} class="w-full sm:w-auto px-10 py-4 rounded-2xl bg-primary text-primary-foreground font-black text-lg hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-3 active:scale-[0.98]" disabled={isSubmitting}>
         {#if isSubmitting}<Loader2 class="w-6 h-6 animate-spin" /><span>Menyimpan...</span>{:else}<Save class="w-6 h-6" /><span>Simpan Perubahan</span>{/if}
       </button>
     </div>
-  {/if}
 </AdminLayout>

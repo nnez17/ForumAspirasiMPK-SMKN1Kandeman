@@ -5,6 +5,7 @@ import MessageSquare from "@lucide/svelte/icons/message-square";
 import LinkIcon from "@lucide/svelte/icons/link";
 import { api } from "@/lib/eden/client";
 import { adminState } from "@/lib/adminState.svelte";
+import { Skeleton } from "@/components/ui/skeleton/index.js";
 import AdminLayout from "./AdminLayout.svelte";
 
 let aspirations: any[] = $state([]);
@@ -65,23 +66,30 @@ async function fetchData() {
     </select>
   </div>
 
-  {#if isLoadingData}
-    <div class="flex flex-col items-center justify-center py-20 space-y-4">
-      <Loader2 class="w-10 h-10 animate-spin text-primary" />
-      <p class="font-bold text-muted-foreground">Memuat data aspirasi...</p>
-    </div>
-  {:else}
-    <div class="overflow-x-auto">
-      <table class="w-full text-left border-collapse">
-        <thead>
-          <tr class="border-b-2 border-border">
-            <th class="py-4 pr-4 text-xs font-black text-muted-foreground uppercase tracking-widest whitespace-nowrap">Siswa</th>
-            <th class="py-4 px-4 text-xs font-black text-muted-foreground uppercase tracking-widest hidden sm:table-cell">Pesan</th>
-            <th class="py-4 px-4 text-xs font-black text-muted-foreground uppercase tracking-widest text-center whitespace-nowrap hidden md:table-cell">Status</th>
-            <th class="py-4 px-4 text-xs font-black text-muted-foreground uppercase tracking-widest text-right whitespace-nowrap">Bukti</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-border">
+  <div class="overflow-x-auto">
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="border-b-2 border-border">
+          <th class="py-4 pr-4 text-xs font-black text-muted-foreground uppercase tracking-widest whitespace-nowrap">Siswa</th>
+          <th class="py-4 px-4 text-xs font-black text-muted-foreground uppercase tracking-widest hidden sm:table-cell">Pesan</th>
+          <th class="py-4 px-4 text-xs font-black text-muted-foreground uppercase tracking-widest text-center whitespace-nowrap hidden md:table-cell">Status</th>
+          <th class="py-4 px-4 text-xs font-black text-muted-foreground uppercase tracking-widest text-right whitespace-nowrap">Bukti</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-border">
+        {#if isLoadingData}
+          {#each Array(5) as _}
+            <tr>
+              <td class="py-4 pr-4">
+                <Skeleton class="h-4 w-24 mb-1" />
+                <Skeleton class="h-3 w-16" />
+              </td>
+              <td class="py-4 px-4 hidden sm:table-cell"><Skeleton class="h-4 w-full max-w-[200px]" /></td>
+              <td class="py-4 px-4 text-center hidden md:table-cell"><Skeleton class="h-6 w-16 mx-auto rounded-full" /></td>
+              <td class="py-4 px-4 text-right"><Skeleton class="h-8 w-16 ml-auto rounded-lg" /></td>
+            </tr>
+          {/each}
+        {:else}
           {#each filteredAspirations as item}
             <tr class="hover:bg-muted/50 transition-colors group">
               <td class="py-4 pr-4">
@@ -125,8 +133,8 @@ async function fetchData() {
           {#if aspirations.length === 0}
             <tr><td colspan="4" class="text-center py-8 text-muted-foreground font-medium"> Belum ada aspirasi yang masuk. </td></tr>
           {/if}
-        </tbody>
-      </table>
-    </div>
-  {/if}
+        {/if}
+      </tbody>
+    </table>
+  </div>
 </AdminLayout>

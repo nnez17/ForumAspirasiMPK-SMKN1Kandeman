@@ -24,9 +24,11 @@ let { children, activeSection = "dashboard" } = $props();
 
 let passwordInput = $state("");
 let isLoggingIn = $state(false);
+let isCheckingAuth = $state(true);
 
 onMount(() => {
 	initAuth();
+	isCheckingAuth = false;
 });
 
 async function handleLogin(e: Event) {
@@ -81,11 +83,13 @@ async function handleLogin(e: Event) {
   {/each}
 </div>
 
-{#if !adminState.isAuthenticated}
+{#if isCheckingAuth}
+  <div class="min-h-screen bg-background"></div>
+{:else if !adminState.isAuthenticated}
   <div class="min-h-screen flex flex-col items-center justify-center bg-background px-4">
     <div class="w-full max-w-md mb-24 space-y-8">
       <div class="text-center space-y-2">
-        <img src="/images/logo-mpk.webp" alt="Logo" class="w-32 h-32 mx-auto mb-8" />
+        <img src="/images/logo-mpk.webp" alt="Logo" width="128" height="128" class="w-32 h-32 mx-auto mb-8" />
         <h1 class="text-4xl font-black tracking-tight text-foreground">Admin Access</h1>
         <p class="text-muted-foreground">Otorisasi diperlukan untuk masuk ke dalam sistem.</p>
       </div>

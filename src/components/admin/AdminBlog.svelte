@@ -20,6 +20,7 @@ import * as Dialog from "@/components/ui/dialog/index.js";
 import * as AlertDialog from "@/components/ui/alert-dialog/index.js";
 import { api } from "@/lib/eden/client";
 import { adminState, addToast } from "@/lib/adminState.svelte";
+import { Skeleton } from "@/components/ui/skeleton/index.js";
 import AdminLayout from "./AdminLayout.svelte";
 import { getOptimizedImageUrl } from "@/lib/utils";
 
@@ -333,22 +334,27 @@ async function deleteNews() {
     </button>
   </div>
 
-  {#if isLoadingData}
-    <div class="flex flex-col items-center justify-center py-10">
-      <Loader2 class="w-8 h-8 animate-spin text-primary" />
-    </div>
-  {:else}
-    <div class="overflow-x-auto">
-      <table class="w-full text-left border-collapse">
-        <thead>
-          <tr class="border-b-2 border-border">
-            <th class="py-4 pr-4 text-xs font-black text-muted-foreground uppercase tracking-widest whitespace-nowrap">Judul</th>
-            <th class="py-4 px-4 text-xs font-black text-muted-foreground uppercase tracking-widest whitespace-nowrap hidden sm:table-cell">Kategori</th>
-            <th class="py-4 px-4 text-xs font-black text-muted-foreground uppercase tracking-widest whitespace-nowrap hidden md:table-cell">Tanggal</th>
-            <th class="py-4 pl-4 text-xs font-black text-muted-foreground uppercase tracking-widest text-right whitespace-nowrap">Aksi</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-border">
+  <div class="overflow-x-auto">
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="border-b-2 border-border">
+          <th class="py-4 pr-4 text-xs font-black text-muted-foreground uppercase tracking-widest whitespace-nowrap">Judul</th>
+          <th class="py-4 px-4 text-xs font-black text-muted-foreground uppercase tracking-widest whitespace-nowrap hidden sm:table-cell">Kategori</th>
+          <th class="py-4 px-4 text-xs font-black text-muted-foreground uppercase tracking-widest whitespace-nowrap hidden md:table-cell">Tanggal</th>
+          <th class="py-4 pl-4 text-xs font-black text-muted-foreground uppercase tracking-widest text-right whitespace-nowrap">Aksi</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-border">
+        {#if isLoadingData}
+          {#each Array(5) as _}
+            <tr>
+              <td class="py-4 pr-4"><Skeleton class="h-6 w-3/4" /></td>
+              <td class="py-4 px-4 hidden sm:table-cell"><Skeleton class="h-4 w-20" /></td>
+              <td class="py-4 px-4 hidden md:table-cell"><Skeleton class="h-4 w-24" /></td>
+              <td class="py-4 pl-4 text-right"><Skeleton class="h-8 w-20 ml-auto" /></td>
+            </tr>
+          {/each}
+        {:else}
           {#each newsList as news}
             <tr class="hover:bg-muted/50 transition-colors group">
               <td class="py-4 pr-4">
@@ -381,10 +387,10 @@ async function deleteNews() {
           {#if newsList.length === 0}
             <tr><td colspan="4" class="text-center py-8 text-muted-foreground font-medium"> Belum ada berita. </td></tr>
           {/if}
-        </tbody>
-      </table>
-    </div>
-  {/if}
+        {/if}
+      </tbody>
+    </table>
+  </div>
 </AdminLayout>
 
 <Dialog.Root bind:open={isDialogOpen}>
