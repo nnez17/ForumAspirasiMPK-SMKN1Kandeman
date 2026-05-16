@@ -10,6 +10,7 @@ import Newspaper from "@lucide/svelte/icons/newspaper";
 import Edit from "@lucide/svelte/icons/edit";
 import MessageSquare from "@lucide/svelte/icons/message-square";
 import Users from "@lucide/svelte/icons/users";
+import SettingsIcon from "@lucide/svelte/icons/settings";
 import { api } from "@/lib/eden/client";
 import {
 	adminState,
@@ -165,6 +166,13 @@ async function handleLogin(e: Event) {
             >
               <Users class="w-5 h-5" />
               <span>Struktur Pengurus</span>
+            </a>
+            <a
+              href="/admin/settings"
+              class={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all ${activeSection === "settings" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:text-foreground hover:bg-muted"}`}
+            >
+              <SettingsIcon class="w-5 h-5" />
+              <span>Pengaturan</span>
             </a>
           </nav>
         </div>

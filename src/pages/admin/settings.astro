@@ -1,0 +1,18 @@
+---
+import Footer from "@/components/layout/Footer.astro";
+import Navbar from "@/components/layout/Navbar.astro";
+import Layout from "@/layouts/Layout.astro";
+import AdminSettings from "@/components/admin/AdminSettings.svelte";
+---
+
+<Layout>
+	<Navbar isAdmin={true} />
+	<AdminSettings client:only="svelte" />
+	<Footer />
+</Layout>
+
+<style is:global>
+    html {
+        scroll-padding-top: 100px;
+    }
+</style>

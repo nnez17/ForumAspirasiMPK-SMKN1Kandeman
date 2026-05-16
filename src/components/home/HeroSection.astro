@@ -2,6 +2,9 @@
 import { SendHorizontal } from "@lucide/astro";
 import { Button } from "@/components/ui/button";
 import { Image } from "astro:assets";
+import { api } from "@/lib/eden/server";
+
+const { data: hero } = await api.config.hero.get();
 ---
 <section class="relative w-full overflow-hidden" id="home">
   <!-- Decorative Top  -->
@@ -10,7 +13,7 @@ import { Image } from "astro:assets";
 
   <div 
     class="relative w-full min-h-[75vh] sm:min-h-[80vh] md:min-h-[85vh] lg:min-h-[90vh] flex flex-col justify-center pt-32 sm:pt-40 md:pt-48 lg:pt-56 xl:pt-64 pb-12 sm:pb-16 bg-cover bg-center"
-    style="background-image: url('/images/hero.webp');"
+    style={`background-image: url('/i/${hero?.data?.image}');`}
   >
     <!-- Overlay -->
     <div class="absolute inset-0 bg-sky-900/40 mix-blend-multiply"></div>
